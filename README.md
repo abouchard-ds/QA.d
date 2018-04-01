@@ -7,6 +7,9 @@ QASMS_downloader (quantitative analysis -for- stock market software) is a small 
 
 ![Main configuration dialog](qasms_1.0_config.png?raw=true "Main configuration dialog")
 
+![Progress dialog during download](qasms_1.0_download.png?raw=true "Progress dialog during download")
+
+
 ## Pre-requisites
 The program has been developed and tested on Ubuntu 17.10. The following are used by the script. Nothing fancy, was default install on Ubuntu 17.10.
 
