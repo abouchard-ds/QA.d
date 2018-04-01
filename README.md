@@ -4,7 +4,7 @@
 ### Pre-requisites
 The program has been developed and tested on Ubuntu 17.10. The following are used by the script. Nothing fancy, was default install on Ubuntu 17.10.
 
-* Need a Yahoo! Finance Account
+* [Yahoo! Finance Account](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)
 
 * bash 4.4.12
 * zenity 3.24.0
@@ -13,3 +13,4 @@ The program has been developed and tested on Ubuntu 17.10. The following are use
 * date 8.26
 * wget 1.19.1
 
+Developed with geany 1.31.
