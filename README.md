@@ -46,4 +46,24 @@ Stocks ini files provided for testing are:
 - tsxv_minimal.ini
 - tsx_tsxv.ini
 
+Row examples :
+Data source : Yahoo! Finance Canada
+Currency in CAD$
+
+Where the columns are:
+TICKER,DATE,OPEN,HIGH,LOW,CLOSE,ADJ CLOSE,VOLUME
+
+Close price adjusted for splits. Adjusted close price adjusted for both dividends and splits.
+```
+NTS.V,2018-01-09,1.390000,1.450000,1.350000,1.390000,1.390000,105100
+```
+
+
+
+
+
 ## Acknowledgments
+
+This program was created as a simple exercise to practice bash with zenity. Most zenity features are tested in this script.
+
+The dataset generated is still of good use since Yahoo blocked their Finance API.
