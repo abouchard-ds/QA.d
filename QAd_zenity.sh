@@ -30,7 +30,7 @@ function zen_configuration(){
 
 	local check=0
 	# loop to force password and date
-	until [ $check -eq 3 ]
+	until [ $check -eq 2 ]
 	do
 
 		output=$(zenity --forms --title="${soft_version}" \
