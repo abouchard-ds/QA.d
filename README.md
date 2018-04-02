@@ -18,7 +18,8 @@
 
   <img src="https://img.shields.io/badge/bash-4.4.12-blue.svg">
   <img src="https://img.shields.io/badge/zenity-3.24.0-pink.svg">
-  ![](https://img.shields.io/badge/powered%20by-jekyll-red.svg)
+  <img src="https://img.shields.io/badge/powered%20by-jekyll-red.svg">
+  ![]()
 
 </p>
 
