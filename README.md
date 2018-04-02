@@ -16,8 +16,8 @@
 ## Introduction
 <p align="center">
 
-[![Bash Status](https://img.shields.io/badge/bash-4.4.12-blue.svg)](https://img.shields.io/badge/bash-4.4.12-blue.svg)
-[![zenity Status](https://img.shields.io/badge/zenity-3.24.0-pink.svg)](https://img.shields.io/badge/zenity-3.24.0-pink.svg)
+  <img src="https://img.shields.io/badge/bash-4.4.12-blue.svg)](https://img.shields.io/badge/bash-4.4.12-blue.svg">
+  <img src="https://img.shields.io/badge/zenity-3.24.0-pink.svg)](https://img.shields.io/badge/zenity-3.24.0-pink.svg">
 
 </p>
 
