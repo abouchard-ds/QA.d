@@ -87,27 +87,32 @@ touch $aggregator
 # Valide s'il peut ecrire dans le fichier que nous veons de creer. S'il ne peut pas exit avec code 1
 if [[ ! -w $aggregator ]]; then exit 1; fi
 
-# Choix des quotes qui seront downloader
-declare -a arr=("%5EVIX" "%5EGSPC" "%5EDJI" "%5EGSPTSE" "RY.TO" "TD.TO" "BNS.TO" "ENB.TO" "CNR.TO" "SU.TO" "CNU.TO" "BMO.TO" "TRP.TO" "BCE.TO" "CNQ.TO" "MFC.TO" "CM.TO" "BAM-A.TO" "TRI.TO" "QSR.TO" "GWO.TO" "ATD-B.TO" "IMO.TO" "RCI-B.TO" "CP.TO" "SLF.TO" "L.TO" "PWF.TO" "MG.TO" "ABX.TO" "WCN.TO" "BIP-UN.TO" "BPY-UN.TO" "NA.TO" "FTS.TO" "GIB-A.TO" "FNV.TO" "FFH.TO" "PPL.TO" "SAP.TO" "CVE.TO" "HSE.TO" "DOL.TO" "POW.TO" "SHOP.TO" "CSU.TO" "SJR-B.TO" "AEM.TO" "G.TO" "ECA.TO" "WN.TO" "H.TO" "IFC.TO" "BEP-UN.TO" "CTC-A.TO" "WPM.TO" "CU.TO" "CTC.TO" "IGM.TO")
+# Load le fichier stock_config.ini dans un array 
+# Contient une liste de stocks 'non-exotique' du TSX.
+declare -a arr
+readarray -t arr < stock_config.ini
 arrayLen=${#arr[@]}
 
-# Loop de la job
+# Fonction pour le download
 function download() {
 	
+	# la variable index ne sert qu'a l'affichage du progress dialog de zenity
+	# sert au calcul du pourcentage.
 	index=1
 	for STOCKS in "${arr[@]}"
 	do
-		# echo pour la fenetre Zenity (pourcentage de progress)
+		# echo pour la fenetre Zenity (gere le progress bar)
 		percentage=$(bc <<< "scale=2; ($index/$arrayLen)*100")
 		echo $percentage
-		# echo pour la fenetre Zenity (texte du progress)
+		# echo pour la fenetre Zenity (gere le texte affiche)
 		echo "# Downloading data for:" $STOCKS
 		
 		filename=$STOCKS".dat"
-		logname=$STOCKS".log"
+		# doit ajoute un error handling pour passer au suivant en cas d'erreur.
 		url="https://query1.finance.yahoo.com/v7/finance/download/"$STOCKS"?period1="$period1"&period2="$period2"&interval=1d&events=history"
 		wget -q -O $filename --post-data $postdata $url
 		# ajoute une premiere colonne avec le nom de l'action - le langage HTML a fait deformer les noms des index car ils commence par ^
+		# --> a modifier car je ne download plus ces index avec le stock_config.ini
 		case $STOCKS in
 		 %5EVIX)      
 			  sed -i -r "s/^/VIX,/g" $filename
@@ -134,13 +139,13 @@ function download() {
 
 }
 
-# call function into progress dialog
+# call function and pipe into progress dialog
 download | zenity --progress --title="${soft_version}" --text="" --percentage=0 2>/dev/null
 
-# supprime les fichier individuels
+# supprime les fichiers temporaires individuels
 rm -f *.dat
 
-# prend le size pour afficher
+# preparations pour la fenetre de Summary
 filesize=$(du -sh $aggregator | awk '{print $1}')
 countline=$(cat $aggregator | wc -l)
 newline=$'\n'
@@ -148,7 +153,10 @@ start=period1=$(awk -F, '{print $4}' <<<$config)
 end=period2=$(date -d 'today 00:00:00' +%s)
 summary="Download completed. $newline Historical financial information for $arrayLen stocks.$newline File name is : $aggregator $newline File has $countline lines for a size of $filesize"
 
+
 # Wipe le STOCK_DATA_permanent.tbl et
 # Copie le nouveau temporaire vers le permanent
+######### Ceci etait utilise quand je loadait les donner dans une external table Oracle Database
+######### Je vais le retravailler plus tard lorsque j'aurai ajouter une option de l'active ou non. 
 #cat $aggregator > STOCK_DATA_permanent.tbl
 zenity --info --title="${soft_version}" --text="${summary}"  2>/dev/null
