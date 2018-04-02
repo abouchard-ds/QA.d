@@ -153,8 +153,8 @@ rm -f ./tmp/*.dat
 mv ./tmp/$aggregator $folder/$aggregator
 
 # preparations pour la fenetre de Summary
-filesize=$(du -sh ./tmp/$aggregator | awk '{print $1}')
-countline=$(cat ./tmp/$aggregator | wc -l)
+filesize=$(du -sh $folder/$aggregator | awk '{print $1}')
+countline=$(cat $folder/$aggregator | wc -l)
 newline=$'\n'
 start=period1=$(awk -F, '{print $4}' <<<$config)
 end=period2=$(date -d 'today 00:00:00' +%s)
