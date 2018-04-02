@@ -1,7 +1,7 @@
 ![Logo](media/qa-d_logo.png)
 
 <p align="center">
- *audaces fortuna juvat*
+ <i>audaces fortuna juvat</i>
   <br>
 </p>
 
