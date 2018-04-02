@@ -52,7 +52,7 @@ function download() {
 	for STOCKS in "${arr[@]}"
 	do
 
-		percentage=$(bc <<< "scale=2; ($index/$arrayLen)*100")
+		percentage=$(bc <<< "scale=4; ($index/$arrayLen)*100")
 		echo -ne "Progress percentage : " $percentage " %" '\r'
 		echo "Downloading data for: " $STOCKS
 		filename=$STOCKS".dat"

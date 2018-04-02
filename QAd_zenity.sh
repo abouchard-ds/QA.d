@@ -14,7 +14,7 @@
 # global variable declaration
 soft_version="QA.d downloader 1.2"
 author="Alexandre Bouchard - https://github.com/data-scientia"
-starttime=`date +%s`
+starttime=$(date +%s)
 
 # function must be declared before a call - unlike Python
 function zen_directory(){
@@ -34,20 +34,18 @@ function zen_configuration(){
 	do
 
 		output=$(zenity --forms --title="${soft_version}" \
-		--text="Account informations: " \
+		--text="QA.d configuration: " \
 		--add-entry="Y! username :" \
 		--add-password="Y! password :" \
 		--add-password="Confirm pass:" \
 		--add-calendar="Start date :" \
-		--add-entry="Sleep seconds :" \
 		--separator="," \
 		--forms-date-format=%s 2>/dev/null)
 
-		user1=$(awk -F, '{print $1}' <<<$output)
-		pass1=$(awk -F, '{print $2}' <<<$output)
-		pass2=$(awk -F, '{print $3}' <<<$output)
-		date1=$(awk -F, '{print $4}' <<<$output)
-		sleeptime=$(awk -F, '{print $5}' <<<$output)
+		user1=$(awk -F"," '{print $1}' <<<$output)
+		pass1=$(awk -F"," '{print $2}' <<<$output)
+		pass2=$(awk -F"," '{print $3}' <<<$output)
+		date1=$(awk -F"," '{print $4}' <<<$output)
 
 		check=0
 		if [ "$pass1" == "$pass2" ]
@@ -64,13 +62,6 @@ function zen_configuration(){
 			$(zenity --error --title="${soft_version} - ERROR" --text="Start date must be smaller than yesterday." 2>/dev/null)
 		fi
 
-		if [[ -z "$sleeptime" ]]
-		then
-			check=$((check + 1))
-		else
-			$(zenity --error --title="${soft_version} - ERROR" --text="Sleep timer must be configured. 0.5 is the suggested time." 2>/dev/null)
-		fi
-
 	done
 
 	echo "${output}"
@@ -83,12 +74,11 @@ config=$(zen_configuration)
 folder=$(zen_directory)
 
 aggregator=QAd_DATA-"$(date +%Y%m%d)".csv
-yuser=$(awk -F, '{print $1}' <<<$config)
-ypass=$(awk -F, '{print $2}' <<<$config)
+yuser=$(awk -F"," '{print $1}' <<<$config)
+ypass=$(awk -F"," '{print $2}' <<<$config)
 postdata="user=${yuser}&password=${ypass}"
-period1=$(awk -F, '{print $4}' <<<$config)
+period1=$(awk -F"," '{print $4}' <<<$config)
 period2=$(date -d 'today 00:00:00' +%s)
-sleeptime=$(awk -F, '{print $5}' <<<$config)
 
 # Creer un dossier dans le working directory pour acceullir les fichiers temporaires s'il n'existe pas
 mkdir -p ./tmp
@@ -152,7 +142,6 @@ function download() {
 		sed -i "s/null//g" ./tmp/$filename
 		cat ./tmp/$filename >> ./tmp/$aggregator
 		index=$((index + 1))
-		sleep $sleeptime
 	done
 
 }
@@ -170,7 +159,7 @@ countline=$(cat $folder/$aggregator | wc -l)
 newline=$'\n'
 #start=period1=$(awk -F, '{print $4}' <<<$config)
 #end=period2=$(date -d 'today 00:00:00' +%s)
-endtime=`date +%s`
+endtime=$(date +%s)
 runtime=$((endtime-starttime))
 summary="Download completed. $newline Historical financial information for $arrayLen stocks.$newline File name is : $aggregator $newline File has $countline lines for a size of $filesize $newline Runtime was: $runtime seconds."
 
