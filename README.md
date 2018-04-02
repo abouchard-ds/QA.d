@@ -5,11 +5,8 @@ Historical Stock Market Data Downloader for Quantitative Analysis or general dat
 
 - [Introduction](#introduction)
 - [Features](#features)
-- [Feedback](#feedback)
-- [Contributors](#contributors)
+- [Installation](#installation)
 - [Build Process](#build-process)
-- [Backers](#backers-)
-- [Sponsors](#sponsors-)
 - [Acknowledgments](#acknowledgments)
 
 ## Introduction
@@ -20,7 +17,7 @@ QA.D Downloader is a small bash script to automatically download historical data
 
 This is the stepping stone to a greater project for a complete Quants solution from scratch.
 
-## Prerequisites
+## Installation
 The program has been developed and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop). The following packages are used by the script. Nothing fancy, it was all default install on Ubuntu 17.10.
 
 * [Yahoo! Finance Account](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)
