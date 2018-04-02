@@ -1,5 +1,5 @@
-![Logo](media/qad_logo2.png)
-Historical Stock Market Data Downloader for Quantitative Analysis or general dataset creation.
+![Logo](media/qa-d_logo.png)
+Historical Stock Market Data Downloader for dataset creation.
 
 ## Table of Contents
 
