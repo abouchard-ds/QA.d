@@ -64,7 +64,7 @@ function zen_configuration(){
 			$(zenity --error --title="${soft_version} - ERROR" --text="Start date must be smaller than yesterday." 2>/dev/null)
 		fi
 
-		if [[ $sleeptime -eq 0 ]]
+		if [[ -z "$sleeptime" ]]
 		then
 			check=$((check + 1))
 		else
