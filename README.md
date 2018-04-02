@@ -1,14 +1,14 @@
-# QA.D Downloader v1.0
+# QA.D Downloader v1.1
 
-Historical Stock Market Data Downloader for Quantitative Analysis or general dataset creation in a data science context.
+Historical Stock Market Data Downloader for Quantitative Analysis or general dataset creation.
 
 ![Logo](qad_logo.png)
 
 
 ## Summary
-QASMS_downloader (quantitative analysis stock market software) is a small bash script to automatically download historical data for stocks from Yahoo Finance (as data source) and format it as CSV file. It has a small GUI made with zenity. You can download historical data from the ~1960 until yesterday at midnight. It downloads the data per stock so I will add a stock picker window in the future. For the moment you will need to edit the array "arr" in the script to select your own stocks. 
+QA.D_downloader is a small bash script to automatically download historical data for stocks from Yahoo Finance (as data source) and format it as CSV file. It has a small GUI made with zenity. You can download historical data from anytime until yesterday at midnight. For the moment you will need to edit the *stock_config.ini* to select your own stocks. 
 
-**This is only the stepping stone to a greater project for a complete Quants solution from scratch.**
+This is the stepping stone to a greater project for a complete Quants solution from scratch.
 
 ## Prerequisites
 The program has been developed and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop). The following packages are used by the script. Nothing fancy, it was all default install on Ubuntu 17.10.
