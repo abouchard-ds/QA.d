@@ -47,7 +47,7 @@ function zen_configuration(){
 		pass1=$(awk -F, '{print $2}' <<<$output)
 		pass2=$(awk -F, '{print $3}' <<<$output)
 		date1=$(awk -F, '{print $4}' <<<$output)
-		sleeptime=$(awk -F, '{print $5}' <<<$config)
+		sleeptime=$(awk -F, '{print $5}' <<<$output)
 
 		check=0
 		if [ "$pass1" == "$pass2" ]
