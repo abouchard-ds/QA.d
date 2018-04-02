@@ -1,7 +1,7 @@
 ![Logo](media/qa-d_logo.png)
 
 <p align="center">
-  Historical Stock Market Data Downloader for dataset creation.
+ *audaces fortuna juvat*
   <br>
 </p>
 
