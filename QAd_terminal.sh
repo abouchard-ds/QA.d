@@ -9,6 +9,7 @@
 # global variable declaration
 soft_version="QA.d downloader 1.2"
 author="Alexandre Bouchard - https://github.com/data-scientia"
+starttime=$(date +%s)
 
 if [[ $# -lt 3 ]] ; then
     echo "Call the script with USERNAME PASSWORD STOCK_FILE as arguments. "
@@ -23,7 +24,7 @@ postdata="user=${yuser}&password=${ypass}"
 period1="31536000"
 period2=$(date -d 'today 00:00:00' +%s)
 sleeptime=0.5
-starttime=`date +%s`
+
 
 # Creer un dossier dans le working directory pour acceullir les fichiers temporaires s'il n'existe pas
 mkdir -p ./tmp
@@ -97,7 +98,7 @@ rm -f ./tmp/*.dat
 filesize=$(du -sh ./tmp/$aggregator | awk '{print $1}')
 countline=$(cat ./tmp/$aggregator | wc -l)
 newline=$'\n'
-endtime=`date +%s`
+endtime=$(date +%s)
 runtime=$((endtime-starttime))
 summary1="Download completed. $newline Historical financial information for $arrayLen stocks."
 summary2="File name is : $aggregator $newline File has $countline lines for a size of $filesize"
