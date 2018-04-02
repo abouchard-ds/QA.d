@@ -173,7 +173,7 @@ newline=$'\n'
 #end=period2=$(date -d 'today 00:00:00' +%s)
 endtime=`date +%s`
 runtime=$((endtime-starttime))
-summary="Download completed. $newline Historical financial information for $arrayLen stocks.$newline File name is : $aggregator $newline File has $countline lines for a size of $filesize"
+summary="Download completed. $newline Historical financial information for $arrayLen stocks.$newline File name is : $aggregator $newline File has $countline lines for a size of $filesize $newline Runtime was: $runtime seconds."
 
 # Wipe le STOCK_DATA_permanent.tbl et
 # Copie le nouveau temporaire vers le permanent
