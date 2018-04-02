@@ -36,7 +36,7 @@ This program was made as *a learning instrument* for bash scripting, creating si
 ## Installation
 The program has been developed and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop). The following packages are used by the script. Nothing fancy, it was all default install on Ubuntu 17.10.
 
-You'll need to have an account on Y! Finance to be able to download the data. 
+You'll need to have an account on Y! Finance to be able to download the data.
 * [Yahoo! Finance Account](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)
 
 | packages | description | explanation |
@@ -52,32 +52,34 @@ To validate if you have the prerequisites:
 dpkg -l bash zenity bc gawk date wget
 ```
 
-You should a similar return:
+You should get a somewhat similar return:
 ```bash
 $ dpkg -l bash zenity bc gawk date wget
-||/ Name                    Version          Architecture     Description
-+++-=======================-================-================-===================================================
-ii  bash                    4.4-5ubuntu1     amd64            GNU Bourne Again SHell
-ii  bc                      1.06.95-9build2  amd64            GNU bc arbitrary precision calculator language
-ii  gawk                    1:4.1.4+dfsg-1   amd64            GNU awk, a pattern scanning and processing language
-ii  wget                    1.19.1-3ubuntu1. amd64            retrieves files from the web
-ii  zenity                  3.24.0-1         amd64            Display graphical dialog boxes from shell scripts
+||/ Name        Version          Architecture     Description
++++-===========-================-================-===================================================
+ii  bash        4.4-5ubuntu1     amd64            GNU Bourne Again SHell
+ii  bc          1.06.95-9build2  amd64            GNU bc arbitrary precision calculator language
+ii  gawk        1:4.1.4+dfsg-1   amd64            GNU awk, a pattern scanning and processing language
+ii  wget        1.19.1-3ubuntu1. amd64            retrieves files from the web
+ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes from shell scripts
 ```
 
 ## Dataset
 As a data scientist or enthusiast having full knowledge of your dataset is important.
 
-Row examples :
-Data source : Yahoo! Finance Canada
-Currency in CAD$
+Data source : Yahoo! Finance Canada. Currency is CAD$
 
-Where the columns are:
-TICKER,DATE,OPEN,HIGH,LOW,CLOSE,ADJ CLOSE,VOLUME
-
-Close price adjusted for splits. Adjusted close price adjusted for both dividends and splits.
+Row example :
 ```
 NTS.V,2018-01-09,1.390000,1.450000,1.350000,1.390000,1.390000,105100
 ```
+Where the columns are:
+TICKER, DATE, OPEN, HIGH, LOW,  CLOSE<sup>1</sup>,  ADJ CLOSE<sup>2</sup>,  VOLUME
+
+<sup>1</sup>Close price adjusted for splits.
+
+<sup>2</sup>Adjusted close price adjusted for both dividends and splits.
+
 
 ## Examples
 If you use the provided *tsx_tsxv.ini* and uses a Start Date of 1970, you'll get a file of 285M containing 3,339,114 records on ~1150 stocks.
