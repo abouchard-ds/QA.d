@@ -48,15 +48,12 @@ arrayLen=${#arr[@]}
 # Fonction pour le download
 function download() {
 
-	# la variable index ne sert qu'a l'affichage du progress dialog de zenity
-	# sert au calcul du pourcentage.
 	index=1
 	for STOCKS in "${arr[@]}"
 	do
-		# echo pour la fenetre Zenity (gere le progress bar)
+
 		percentage=$(bc <<< "scale=2; ($index/$arrayLen)*100")
 		echo -ne "Progress percentage : " $percentage " %" '\r'
-		# echo pour la fenetre Zenity (gere le texte affiche)
 		echo "Downloading data for: " $STOCKS
 		filename=$STOCKS".dat"
 		# doit ajoute un error handling pour passer au suivant en cas d'erreur.
@@ -102,16 +99,14 @@ countline=$(cat ./tmp/$aggregator | wc -l)
 newline=$'\n'
 endtime=`date +%s`
 runtime=$((endtime-starttime))
-summary="Download completed. $newline Historical financial information for $arrayLen stocks.$newline File name is : $aggregator $newline File has $countline lines for a size of $filesize"
+summary1="Download completed. $newline Historical financial information for $arrayLen stocks."
+summary2="File name is : $aggregator $newline File has $countline lines for a size of $filesize"
 
-# Wipe le STOCK_DATA_permanent.tbl et
-# Copie le nouveau temporaire vers le permanent
-######### Ceci etait utilise quand je loadait les donner dans une external table Oracle Database
-######### Je vais le retravailler plus tard lorsque j'aurai ajouter une option de l'active ou non.
-#cat $aggregator > STOCK_DATA_permanent.tbl
 function printsummary() {
 	echo "=================================================================================="
-	echo $summary
+	echo $summary1
+	echo $summary2
+	echo "Runtime was " $runtime " seconds."
 	echo "=================================================================================="
 }
 

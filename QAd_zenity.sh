@@ -85,11 +85,10 @@ folder=$(zen_directory)
 aggregator=QAd_DATA-"$(date +%Y%m%d)".csv
 yuser=$(awk -F, '{print $1}' <<<$config)
 ypass=$(awk -F, '{print $2}' <<<$config)
-sleeptime=$(awk -F, '{print $5}' <<<$config)
 postdata="user=${yuser}&password=${ypass}"
 period1=$(awk -F, '{print $4}' <<<$config)
 period2=$(date -d 'today 00:00:00' +%s)
-
+sleeptime=$(awk -F, '{print $5}' <<<$config)
 
 # Creer un dossier dans le working directory pour acceullir les fichiers temporaires s'il n'existe pas
 mkdir -p ./tmp
