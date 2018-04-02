@@ -6,6 +6,7 @@ Historical Stock Market Data Downloader for Quantitative Analysis or general dat
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
+- [Examples](#examples)
 - [Acknowledgments](#acknowledgments)
 
 ## Introduction
@@ -36,5 +37,13 @@ The program has been developed and tested on [Ubuntu 17.10 Desktop](https://www.
 validate if you have all prerequisites;
 
 ```
+
+## Examples
+File provided in the examples folder was generated on April 2 2018 using *"tsx_tsxv.ini"* with a *"Start Date"* of January 1 2018.
+
+Stocks ini files provided for testing are:
+- tsx_minimal.ini
+- tsxv_minimal.ini
+- tsx_tsxv.ini
 
 ## Acknowledgments

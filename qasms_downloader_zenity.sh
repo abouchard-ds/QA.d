@@ -12,7 +12,7 @@
 	set -o pipefail
 
 # global variable declaration
-soft_version="QASMS Downloader 1.1"
+soft_version="QA.D Downloader 1.1"
 
 # function must be declared before a call - unlike Python
 function zen_directory(){
@@ -49,14 +49,14 @@ function zen_configuration(){
 		then
 			check=$((check + 1))
 		else
-			$(zenity --error --title="${soft_version}" --text="Passwords does not match." 2>/dev/null)
+			$(zenity --error --title="${soft_version} - ERROR" --text="Passwords does not match." 2>/dev/null)
 		fi
 
 		if [[ $date1 -lt $(date +%s) ]]
 		then
 			check=$((check + 1))
 		else
-			$(zenity --error --title="${soft_version}" --text="Start date must be smaller than today." 2>/dev/null)
+			$(zenity --error --title="${soft_version} - ERROR" --text="Start date must be smaller than yesterday." 2>/dev/null)
 		fi
 
 	done
@@ -90,7 +90,7 @@ if [[ ! -w $aggregator ]]; then exit 1; fi
 # Load le fichier stock_config.ini dans un array
 # Contient une liste de stocks 'non-exotique' du TSX.
 declare -a arr
-readarray -t arr < tsx_minimal.ini
+readarray -t arr < tsx_tsxv.ini
 arrayLen=${#arr[@]}
 
 # Fonction pour le download
