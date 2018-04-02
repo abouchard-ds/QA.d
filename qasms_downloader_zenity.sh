@@ -12,7 +12,7 @@
 	set -o pipefail
 
 # global variable declaration
-soft_version="QASMS Downloader 1.0"
+soft_version="QASMS Downloader 1.1"
 
 # function must be declared before a call - unlike Python
 function zen_directory(){
