@@ -22,12 +22,10 @@ function zen_directory(){
 }
 
 function zen_configuration(){
-
 	local check=0
 	# loop to force password and date
 	until [ $check -eq 2 ]
 	do
-
 		output=$(zenity --forms --title="${soft_version}" \
 		--text="QA.d configuration: " \
 		--add-entry="Y! username :" \
@@ -56,11 +54,9 @@ function zen_configuration(){
 		else
 			$(zenity --error --title="${soft_version} - ERROR" --text="Start date must be smaller than yesterday." 2>/dev/null)
 		fi
-
 	done
 
 	echo "${output}"
-
 	return $?
 }
 
@@ -167,10 +163,6 @@ endtime=$(date +%s)
 runtime=$((endtime-starttime))
 summary="Download completed. $newline Historical financial information for $arrayLen stocks.$newline File name is : $aggregator $newline File has $countline lines for a size of $filesize $newline Runtime was: $runtime seconds."
 
-# Wipe le STOCK_DATA_permanent.tbl et
-# Copie le nouveau temporaire vers le permanent
-######### Ceci etait utilise quand je loadait les donner dans une external table Oracle Database
-######### Je vais le retravailler plus tard lorsque j'aurai ajouter une option de l'active ou non.
-#cat $aggregator > STOCK_DATA_permanent.tbl
+# show summary once completed
 zenity --info --title="${soft_version}" --text="${summary}" 2>/dev/null
 exit 0
