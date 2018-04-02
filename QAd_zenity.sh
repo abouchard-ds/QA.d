@@ -2,19 +2,14 @@
 #
 
 # bash best practices
-	# exit script on fail command (|| true   when you allow to fail)
 	set -o errexit
-	# force variable declaration
 	set -o nounset
-	# debugging
-	# set -o xtrace
-	# catch errors in pipes
 	set -o pipefail
 
 # global variable declaration
-soft_version="QA.d downloader 1.2"
-author="Alexandre Bouchard - https://github.com/data-scientia"
-starttime=$(date +%s)
+	soft_version="QA.d downloader 1.2"
+	author="Alexandre Bouchard - https://github.com/data-scientia"
+	starttime=$(date +%s)
 
 # function must be declared before a call - unlike Python
 function zen_directory(){
@@ -79,6 +74,16 @@ ypass=$(awk -F"," '{print $2}' <<<$config)
 postdata="user=${yuser}&password=${ypass}"
 period1=$(awk -F"," '{print $4}' <<<$config)
 period2=$(date -d 'today 00:00:00' +%s)
+
+newline=$'\n'
+#confirm_text="Y! user: ${yuser} ${newline} Y! pass:  ${ypass} ${newline} Start date: $((date -d period1)) ${newline} End date:  $((date -d period2))"
+
+# yes is 0  &  no is 1
+# will work on the confirmation text later
+#confirm=$(zenity --question --title="${soft_version}" --text="Are you sure" 2>/dev/null)
+#if [[ $confirm -eq 1 ]]
+#	then
+#		config=$(zen_configuration)
 
 # Creer un dossier dans le working directory pour acceullir les fichiers temporaires s'il n'existe pas
 mkdir -p ./tmp
@@ -156,7 +161,6 @@ mv ./tmp/$aggregator $folder/$aggregator
 # preparations pour la fenetre de Summary
 filesize=$(du -sh $folder/$aggregator | awk '{print $1}')
 countline=$(cat $folder/$aggregator | wc -l)
-newline=$'\n'
 #start=period1=$(awk -F, '{print $4}' <<<$config)
 #end=period2=$(date -d 'today 00:00:00' +%s)
 endtime=$(date +%s)
@@ -168,4 +172,5 @@ summary="Download completed. $newline Historical financial information for $arra
 ######### Ceci etait utilise quand je loadait les donner dans une external table Oracle Database
 ######### Je vais le retravailler plus tard lorsque j'aurai ajouter une option de l'active ou non.
 #cat $aggregator > STOCK_DATA_permanent.tbl
-zenity --info --title="${soft_version}" --text="${summary}"  2>/dev/null
+zenity --info --title="${soft_version}" --text="${summary}" 2>/dev/null
+exit 0
