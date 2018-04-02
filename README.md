@@ -39,7 +39,7 @@ validate if you have all prerequisites;
 ```
 
 ## Examples
-File provided in the examples folder was generated on April 2 2018 using *"tsx_tsxv.ini"* with a *"Start Date"* of January 1 2018.
+File provided in the examples folder was generated on April 2 2018 using *"tsx_tsxv.ini"* with a *"Start Date"* of March 1 2018.
 
 Stocks ini files provided for testing are:
 - tsx_minimal.ini

@@ -18,6 +18,7 @@ soft_version="QA.D Downloader 1.1"
 function zen_directory(){
 	zenity --file-selection \
 	--title="${soft_version}" \
+	--text="Select a directory to save temp files and dataset" \
 	--directory 2>/dev/null
 
 	return $?
@@ -26,6 +27,7 @@ function zen_directory(){
 function zen_configuration(){
 
 	local check=0
+	# loop to force password and date
 	until [ $check -eq 2 ]
 	do
 
@@ -68,6 +70,7 @@ function zen_configuration(){
 
 # main script
 config=$(zen_configuration)
+folder=$(zen_directory)
 
 aggregator=STOCK_DATA-"$(date +%Y%m%d)".csv
 yuser=$(awk -F, '{print $1}' <<<$config)
@@ -76,16 +79,19 @@ postdata="user=${yuser}&password=${ypass}"
 period1=$(awk -F, '{print $4}' <<<$config)
 period2=$(date -d 'today 00:00:00' +%s)
 
+# Creer un dossier dans le working directory pour acceullir les fichiers temporaires s'il n'existe pas
+mkdir -p ./tmp
+
 # Regarde s'il y a deja un fichier pour aujourd'hui et le supprime
-if [ -f $aggregator ] ; then
-    rm $aggregator
+if [ -f ./tmp/$aggregator ] ; then
+    rm ./tmp/$aggregator
 fi
 
 # Creer le fichier pour aujourd'hui
-touch $aggregator
+touch ./tmp/$aggregator
 
 # Valide s'il peut ecrire dans le fichier que nous veons de creer. S'il ne peut pas exit avec code 1
-if [[ ! -w $aggregator ]]; then exit 1; fi
+if [[ ! -w ./tmp/$aggregator ]]; then exit 1; fi
 
 # Load le fichier stock_config.ini dans un array
 # Contient une liste de stocks 'non-exotique' du TSX.
@@ -110,30 +116,30 @@ function download() {
 		filename=$STOCKS".dat"
 		# doit ajoute un error handling pour passer au suivant en cas d'erreur.
 		url="https://query1.finance.yahoo.com/v7/finance/download/"$STOCKS"?period1="$period1"&period2="$period2"&interval=1d&events=history"
-		wget -q -O $filename --post-data $postdata $url
+		wget -q -O ./tmp/$filename --post-data $postdata $url
 		# ajoute une premiere colonne avec le nom de l'action - le langage HTML a fait deformer les noms des index car ils commence par ^
 		# --> a modifier car je ne download plus ces index avec le stock_config.ini
 		case $STOCKS in
 		 %5EVIX)
-			  sed -i -r "s/^/VIX,/g" $filename
+			  sed -i -r "s/^/VIX,/g" ./tmp/$filename
 			  ;;
 		 %5EGSPC)
-			  sed -i -r "s/^/SP500,/g" $filename
+			  sed -i -r "s/^/SP500,/g" ./tmp/$filename
 			  ;;
 		 %5EDJI)
-			  sed -i -r "s/^/DJIA,/g" $filename
+			  sed -i -r "s/^/DJIA,/g" ./tmp/$filename
 			  ;;
 		 %5EGSPTSE)
-			  sed -i -r "s/^/SPTSE,/g" $filename
+			  sed -i -r "s/^/SPTSE,/g" ./tmp/$filename
 			  ;;
 		 *)
-			  sed -i -r "s/^/$STOCKS,/g" $filename
+			  sed -i -r "s/^/$STOCKS,/g" ./tmp/$filename
 			  ;;
 		esac
 		# enleve la ligne de header
-		sed -i '1d' $filename
-		sed -i "s/null//g" $filename
-		cat $filename >> $aggregator
+		sed -i '1d' ./tmp/$filename
+		sed -i "s/null//g" ./tmp/$filename
+		cat ./tmp/$filename >> ./tmp/$aggregator
 		index=$((index + 1))
 	done
 
@@ -143,11 +149,12 @@ function download() {
 download | zenity --progress --title="${soft_version}" --text="" --percentage=0 2>/dev/null
 
 # supprime les fichiers temporaires individuels
-rm -f *.dat
+rm -f ./tmp/*.dat
+mv ./tmp/$aggregator $folder/$aggregator
 
 # preparations pour la fenetre de Summary
-filesize=$(du -sh $aggregator | awk '{print $1}')
-countline=$(cat $aggregator | wc -l)
+filesize=$(du -sh ./tmp/$aggregator | awk '{print $1}')
+countline=$(cat ./tmp/$aggregator | wc -l)
 newline=$'\n'
 start=period1=$(awk -F, '{print $4}' <<<$config)
 end=period2=$(date -d 'today 00:00:00' +%s)
