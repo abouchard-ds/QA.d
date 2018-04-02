@@ -22,7 +22,8 @@ sfile=$3
 postdata="user=${yuser}&password=${ypass}"
 period1="31536000"
 period2=$(date -d 'today 00:00:00' +%s)
-
+sleeptime=0.5
+starttime=`date +%s`
 
 # Creer un dossier dans le working directory pour acceullir les fichiers temporaires s'il n'existe pas
 mkdir -p ./tmp
@@ -54,7 +55,7 @@ function download() {
 	do
 		# echo pour la fenetre Zenity (gere le progress bar)
 		percentage=$(bc <<< "scale=2; ($index/$arrayLen)*100")
-		echo "Progress percentage : " $percentage " %"
+		echo -ne "Progress percentage : " $percentage " %" '\r'
 		# echo pour la fenetre Zenity (gere le texte affiche)
 		echo "Downloading data for: " $STOCKS
 		filename=$STOCKS".dat"
@@ -84,6 +85,7 @@ function download() {
 		sed -i "s/null//g" ./tmp/$filename
 		cat ./tmp/$filename >> ./tmp/$aggregator
 		index=$((index + 1))
+		sleep $sleeptime
 	done
 
 }
@@ -98,6 +100,8 @@ rm -f ./tmp/*.dat
 filesize=$(du -sh ./tmp/$aggregator | awk '{print $1}')
 countline=$(cat ./tmp/$aggregator | wc -l)
 newline=$'\n'
+endtime=`date +%s`
+runtime=$((endtime-starttime))
 summary="Download completed. $newline Historical financial information for $arrayLen stocks.$newline File name is : $aggregator $newline File has $countline lines for a size of $filesize"
 
 # Wipe le STOCK_DATA_permanent.tbl et
