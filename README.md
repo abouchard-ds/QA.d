@@ -89,7 +89,7 @@ Stocks ini files provided for testing are:
 They exclude most exotic stock ticker like ".PR." ".F." ".WT." ".DB.".
 
 ## Pseudocode
-Since this was done for learning/academic purpose I will add the pseudocode if a beginner would like to understand the script and learn from it.
+Since this was created for learning/academic purpose I will add the pseudocode for a beginner who would like to understand the script and learn from it.
 
 1. Ask user for username, password and start date
     * Validate input password since user can't see in field
@@ -100,15 +100,15 @@ Since this was done for learning/academic purpose I will add the pseudocode if a
 5. Validate that no Dataset file exists for today and create one
 6. Read the stock parameter file (*tsx_minimal.ini*) into an array
 7. Enter a loop for each stocks :
-    * Gives the percentage of progress ```((index/arraySize)*100)```
+    * Gives the percentage of progress ```((index/arraySize)*100)``` this controls the zenity progress bar
     * Gives the current stock being downloaded ("# abc" insure zenity uses this echo in it's progress window)
     * Create a temporary stock file
-    * Download data into the temporary stock file
+    * Download data into the temporary stock file (wget)
     * Add the stock ticker at the beginning of each lines
     * Remove header and null from temporary stock file
     * Append the temporary file into the final Dataset.CSV
-8. Delete all temporary stock file (1 created by stock)
-9. Move the Dataset.CSV to the user desired location.
+8. Delete all temporary stock file
+9. Move the Dataset.CSV to the user specified location.
 10. Display a dialog summarizing the job and confirming it has been completed.
 
 ## Acknowledgments
