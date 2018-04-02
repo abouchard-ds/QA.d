@@ -12,6 +12,7 @@
 - [Installation](#installation)
 - [Dataset](#dataset)
 - [Examples](#examples)
+- [Pseudocode](#pseudocode)
 - [Acknowledgments](#acknowledgments)
 
 ## Introduction
@@ -24,6 +25,8 @@
 </p>
 
 QA.d (QuantitativeAnalysis.downloader) is a bash script to automatically download historical stocks data from [Yahoo! Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F) (as data source) and format it as CSV file. It uses zenity to create a simple GUI. You can download historical data from anytime until yesterday at midnight (in the extent it is available on Y!Finance).
+
+This program was made as *a learning instrument* for bash scripting, creating simple dialogs with zenity and learning Github.
 
 ## Features
 
@@ -59,6 +62,8 @@ ii  zenity                  3.24.0-1         amd64            Display graphical 
 ```
 
 ## Dataset
+As a data scientist or enthusiast having full knowledge of your dataset is important.
+
 
 ## Examples
 File provided in the examples folder was generated on April 2 2018 using *"tsx_tsxv.ini"* with a *"Start Date"* of March 1 2018.
@@ -80,12 +85,31 @@ Close price adjusted for splits. Adjusted close price adjusted for both dividend
 NTS.V,2018-01-09,1.390000,1.450000,1.350000,1.390000,1.390000,105100
 ```
 
+## Pseudocode
+Since this was done for learning/academic purpose I will add the pseudocode if a beginner would like to understand the script and learn from it.
 
-
-
+1. Ask user for username, password and start date
+ * Validate input password since user can't see in field
+ * Validate input that start date is less than yesterday.
+2. Ask user where she wants to save the Dataset.CSV
+3. Process variables from validated input to forge the URL and the Dataset.CSV
+4. Create a ./tmp directory to put our temporary stock files during download
+5. Validate that no Dataset file exists for today and create one
+6. Read the stock parameter file (*tsx_minimal.ini*) into an array
+7. Enter a loop for each stocks :
+ * Gives the percentage of progress ```((index/arraySize)*100)```
+ * Gives the current stock being downloaded ("# abc" insure zenity uses this echo in it's progress window)
+ * Create a temporary stock file
+ * Download data into the temporary stock file
+ * Add the stock ticker at the beginning of each lines
+ * Remove header and null from temporary stock file
+ * Append the temporary file into the final Dataset.CSV
+8. Delete all temporary stock file (1 created by stock)
+9. Move the Dataset.CSV to the user desired location.
+10. Display a dialog summarizing the job and confirming it has been completed.
 
 ## Acknowledgments
-
-This program was created as a simple exercise to practice bash with zenity. Most zenity features are tested in this script.
-
+This program was created as a simple exercise to practice bash with zenity.
+Most zenity features are tested in this script.
+This was created from scratch without researching other programs would could do the same.
 The dataset generated is still of good use since Yahoo blocked their Finance API.
