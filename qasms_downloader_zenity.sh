@@ -12,13 +12,14 @@
 	set -o pipefail
 
 # global variable declaration
-soft_version="QA.D Downloader 1.1"
+soft_version="QA.D Downloader 1.2"
+author="A.B: https://github.com/data-scientia"
 
 # function must be declared before a call - unlike Python
 function zen_directory(){
 	zenity --file-selection \
 	--title="${soft_version}" \
-	--text="Select a directory to save temp files and dataset" \
+	--text="Select a directory to save your financial dataset : " \
 	--directory 2>/dev/null
 
 	return $?
