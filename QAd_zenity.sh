@@ -12,8 +12,8 @@
 	set -o pipefail
 
 # global variable declaration
-soft_version="QA.D Downloader 1.2"
-author="A.B: https://github.com/data-scientia"
+soft_version="QA.d downloader 1.2"
+author="Alexandre Bouchard - https://github.com/data-scientia"
 
 # function must be declared before a call - unlike Python
 function zen_directory(){
@@ -33,7 +33,7 @@ function zen_configuration(){
 	do
 
 		output=$(zenity --forms --title="${soft_version}" \
-		--text="Configure downloader: " \
+		--text="Account informations: " \
 		--add-entry="Y! username :" \
 		--add-password="Y! password :" \
 		--add-password="Confirm pass:" \
@@ -73,7 +73,7 @@ function zen_configuration(){
 config=$(zen_configuration)
 folder=$(zen_directory)
 
-aggregator=STOCK_DATA-"$(date +%Y%m%d)".csv
+aggregator=QAd_DATA-"$(date +%Y%m%d)".csv
 yuser=$(awk -F, '{print $1}' <<<$config)
 ypass=$(awk -F, '{print $2}' <<<$config)
 postdata="user=${yuser}&password=${ypass}"
@@ -160,7 +160,6 @@ newline=$'\n'
 start=period1=$(awk -F, '{print $4}' <<<$config)
 end=period2=$(date -d 'today 00:00:00' +%s)
 summary="Download completed. $newline Historical financial information for $arrayLen stocks.$newline File name is : $aggregator $newline File has $countline lines for a size of $filesize"
-
 
 # Wipe le STOCK_DATA_permanent.tbl et
 # Copie le nouveau temporaire vers le permanent
