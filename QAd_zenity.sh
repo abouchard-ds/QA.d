@@ -64,7 +64,7 @@ function zen_configuration(){
 config=$(zen_configuration)
 folder=$(zen_directory)
 
-aggregator=QAd_DATA-"$(date +%Y%m%d)".csv
+aggregator=QAd_dataset-"$(date +%Y%m%d)".csv
 yuser=$(awk -F"," '{print $1}' <<<$config)
 ypass=$(awk -F"," '{print $2}' <<<$config)
 postdata="user=${yuser}&password=${ypass}"
@@ -143,6 +143,7 @@ function download() {
 		sed -i "s/null//g" ./tmp/$filename
 		cat ./tmp/$filename >> ./tmp/$aggregator
 		index=$((index + 1))
+		sleep 0.5
 	done
 
 }
