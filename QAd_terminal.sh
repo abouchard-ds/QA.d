@@ -39,14 +39,14 @@ touch ./tmp/$aggregator
 
 # Valide s'il peut ecrire dans le fichier que nous veons de creer. S'il ne peut pas exit avec code 1
 if [[ ! -w ./tmp/$aggregator ]]; then exit 1; fi
-echo "${aggregator} -> is your dataset file"
+echo "${soft_version} -- Your dataset file is: ${aggregator}"
 
 # Load le fichier stock_config.ini dans un array
 # Contient une liste de stocks 'non-exotique' du TSX.
 declare -a arr
 readarray -t arr < $sfile
 arrayLen=${#arr[@]}
-echo "${sfile} -> parameter file loaded"
+echo "${soft_version} -- Your parameter file is : ${sfile}"
 
 # Fonction pour le download
 function download() {
@@ -84,7 +84,6 @@ function download() {
 		# enleve la ligne de header
 		sed -i '1d' ./tmp/$filename
 		sed -i "s/null//g" ./tmp/$filename
-		cat ./tmp/$filename >> ./tmp/$aggregator
 		index=$((index + 1))
 		sleep $sleeptime
 	done
@@ -95,6 +94,7 @@ function download() {
 download
 
 # supprime les fichiers temporaires individuels
+cat ./tmp/*.dat >> ./tmp/$aggregator
 rm -f ./tmp/*.dat
 
 # preparations pour la fenetre de Summary

@@ -144,7 +144,16 @@ Note that the command line script don't ask for a start date. This is because it
 
 Output looks like:
 ```bash
-Downloading data for : BCE.TO
+QA.d downloader 1.2 -- Your dataset file is: QAd_DATA-20180403.csv
+QA.d downloader 1.2 -- Your parameter file is : TSX_tickers.txt
+Downloading data for:  DGRC.TO
+Downloading data for:  DGS.TO
+Downloading data for:  DHX-A.TO
+Downloading data for:  DHX-B.TO
+Downloading data for:  DIAM.TO
+Downloading data for:  DII-A.TO
+[...]
+
 ```
 
 ## Pseudocode
