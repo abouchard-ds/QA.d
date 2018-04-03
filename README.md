@@ -110,13 +110,35 @@ Stocks ini files provided for testing are:
 
 They exclude most exotic stock ticker like ".PR." ".F." ".WT." ".DB.".
 
-I won't explain here what are these types of stocks but you can read [this page on Investopedia](https://www.investopedia.com/university/stocks/stocks2.asp) for more information (yes it looks like some people are still using \*.asp files). 
+I won't explain here what are these types of stocks but you can read [this page on Investopedia](https://www.investopedia.com/university/stocks/stocks2.asp) for more information (yes it looks like some people are still using \*.asp files).
 
-| Ticker code | Describes        | status   |
-| ----------- | ---------------- | -------- |
-| .UN.        |                  | Included |
-| .PR.        | Preferred shares | Excluded |
-| .WT.        | Warrant          | Excluded |
+| Ticker code | Describes                    | Status   |
+| ----------- | ---------------------------- | -------- |
+| .UN.        | Real estate investment trust / Income Fund | Included |
+| .PR.        | Preferred shares             | Excluded |
+| .WT.        | Warrant                      | Excluded |
+|.NT. |||
+| .A.         | Class                        | Included |
+| .B.         | Class                        | Included |
+| .C.         | Class                        | Included |
+| .D.         | Class                        | Included |
+| .F.         | F                            | Excluded |
+|.L. |||
+|.N. |||
+| .R.         | Receipts                     | Excluded |
+| .U.         | USD$                         | Excluded |
+| .X.         | Class                        | Excluded |
+| .Y.         | Class                        | Excluded |
+| .DB.        | Debentures                   | Excluded |
+
+
+** Using the command line script **
+
+Usage of the command line script (*QAd_terminal.sh*) is:
+```bash
+QAd_terminal.sh username password stockfile
+```
+Note that the command line script don't ask for a start date. This is because it always starts from ~1970 and end date is today thus downloading a full history for the stock in your parameter file. 
 
 ## Pseudocode
 Since this was created for learning/academic purpose I will add the pseudocode for a beginner who would like to understand the script and learn from it.
