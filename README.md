@@ -21,19 +21,20 @@
 
 </p>
 
-QA.d (QuantitativeAnalysis.downloader) is a bash script to automatically download historical stock data from [Yahoo! Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F) (as data source) and format it as CSV file. It uses zenity to create a simple GUI. You can download historical data from anytime until yesterday at midnight (in the extent it is available on Y!Finance).
+QA.d (**Q**uantitative**A**nalysis**.d**ownloader) is a bash script to automatically download historical stock data from [Yahoo! Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F) (as data source) and format it as CSV file. It uses zenity to create a simple GUI. You can download historical data from anytime until yesterday at midnight (in the extent it is available on Y!Finance).
 
-This program was made as *a learning instrument* for bash scripting, creating simple dialogs with zenity and learning Github w/ Jekyll.
+This program was made as *a learning instrument* for bash scripting; dialogs creation with zenity/whiptail; to learn about Github, Jekyll and the Kanban board functionality.
 
-The datasets you can create with this program can become of a sizable amount. If you take all Canadian and American stocks without excluding debentures, warrants, etc. **you could get approximately 2Gb to 5Gb of data**.
+The datasets created with this program can become of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, etc.) **you could get approximately 2Gb to 5Gb of data**.
 
 ## Features
 
-* Easily create datasets **for free**
+* Easily create variable size datasets **for free**
 * Personalize your historical stock datasets
 * Almost no dependencies, packages are default
 * The GUI follows your personnal Linux theme
 * A '*non graphical*' version is also available
+* Who knows? You could become a millionnaire using your dataset to make financial decisions
 
 ## Installation
 
