@@ -109,10 +109,10 @@ If you use the provided *TSX_clean.ini* with a ```Start Date``` of 1971, you'll 
 QAd_dataset.csv provided in the examples folder was generated on April 3 2018 using *"TSX_minimal.ini"* with a *"Start Date"* of March 26 2018.
 
 Stocks.ini files provided for testing are:
-- TSX_minimal.ini (314 random stocks from TSX)
-- TSX_clean.ini (1489 stocks from the TSX)
-- TSXV_clean.ini (XXX stocks from the TSX Venture)
-- TSX_TSXV_complete.ini (XXX stocks from TSX and TSXV)
+- TSX_minimal.ini       (314  random stocks from TSX)
+- TSX_clean.ini         (1489 stocks from the TSX)
+- TSXV_clean.ini        (1522 stocks from the TSX Venture)
+- TSX_TSXV_complete.ini (3011 stocks from TSX and TSXV)
 
 **Stock types excluded**
 
