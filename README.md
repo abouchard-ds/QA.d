@@ -65,11 +65,17 @@ ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes
 ```
 
 ## Dataset
-As a data scientist or enthusiast having full knowledge of your dataset is important.
+As a data scientist, enthusiast or student having full knowledge of your dataset is important. The dataset created by QA.d could be described as:
 
-Data source : Yahoo! Finance Canada. Currency is CAD$
+- Data source : Yahoo! Finance Canada;
+- Prices are described at the 6th decimal point;
+- Prices currency is in CAD$;
+- Date field is formated as : YYYY-MM-DD;
+- Columns headers have been stripped from the dataset;
+    - Insert ```TICKER,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME``` in first row if needed;
+- Line feed is Unix '\n';
 
-Raw example :
+Raw content example :
 ```
 ZOM.V,2017-12-01,3.000000,3.100000,2.750000,2.750000,2.750000,51200
 ZOM.V,2017-12-04,3.000000,3.000000,3.000000,3.000000,3.000000,1000
@@ -78,6 +84,7 @@ ZOM.V,2017-12-06,2.940000,2.950000,2.710000,2.750000,2.750000,7100
 ZOM.V,2017-12-07,2.890000,2.890000,2.890000,2.890000,2.890000,500
 ZOM.V,2017-12-08,2.890000,2.890000,2.890000,2.890000,2.890000,0
 ```
+
 Where the columns are:
 
 | TICKER | DATE       | OPEN     | HIGH     | LOW      | CLOSE<sup>1</sup> | ADJ CLOSE<sup>2</sup> | VOLUME |
