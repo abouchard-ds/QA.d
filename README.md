@@ -85,9 +85,9 @@ Where the columns are:
 | ZOM.V  | 2017-12-01 | 3.000000 | 3.100000 | 2.750000 | 2.750000          | 2.750000              | 51200  |
 | ZOM.V  | 2017-12-04 | 3.000000 | 3.000000 | 3.000000 | 3.000000          | 3.000000              | 1000   |
 
-<sup>1</sup>Close price adjusted for splits.
+<sup>1 Close price adjusted for splits. </sup>
 
-<sup>2</sup>Adjusted close price adjusted for both dividends and splits.
+<sup>2 Adjusted close price adjusted for both dividends and splits. </sup>
 
 
 ## Examples
