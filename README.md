@@ -108,9 +108,10 @@ If you use the provided *TSX_clean.ini* and uses a Start Date of 1970, you'll ge
 File provided in the examples folder was generated on April 2 2018 using *"tsx_tsxv.ini"* with a *"Start Date"* of March 1 2018.
 
 Stocks ini files provided for testing are:
-- tsx_minimal.ini
-- tsxv_minimal.ini
-- tsx_tsxv.ini
+- TSX_minimal.ini ( for light testing 369 random stocks from TSX)
+- TSX_clean.ini (1489 stocks from the TSX)
+- TSXV_clean.ini (XXX stocks from the TSX Venture)
+- TSX_TSXV_complete.ini (XXX stocks from TSX and TSXV)
 
 They exclude most exotic stock ticker like ".PR." ".F." ".WT." ".DB.".
 

@@ -98,7 +98,7 @@ if [[ ! -w ./tmp/$aggregator ]]; then exit 1; fi
 # Load le fichier stock_config.ini dans un array
 # Contient une liste de stocks 'non-exotique' du TSX.
 declare -a arr
-readarray -t arr < tsx_minimal.ini
+readarray -t arr < TSX_minimal.ini
 arrayLen=${#arr[@]}
 
 # Fonction pour le download
