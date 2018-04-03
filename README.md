@@ -1,10 +1,5 @@
 ![Logo](media/qa-d_logo.png)
 
-<p align="center">
- <i>audaces fortuna juvat</i>
-  <br>
-</p>
-
 ## Table of Contents
 
 - [Introduction](#introduction)
