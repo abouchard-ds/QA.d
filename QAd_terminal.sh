@@ -64,7 +64,7 @@ function download() {
 		percentage=$(bc <<< "scale=4; ($index/$arrayLen)*100")
 		#echo -ne "Progress percentage : " $percentage " %" '\r'
 		#echo -ne "Downloading data for: " $STOCKS "" '\r'
-		echo "Downloading data for: " $STOCKS
+		echo "Downloading data (${percentage}): " $STOCKS
 		filename=$STOCKS".dat"
 		# doit ajoute un error handling pour passer au suivant en cas d'erreur.
 		url="https://query1.finance.yahoo.com/v7/finance/download/"$STOCKS"?period1="$period1"&period2="$period2"&interval=1d&events=history"
