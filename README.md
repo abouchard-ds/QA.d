@@ -7,7 +7,7 @@
 - [Installation](#installation)
 - [Dataset](#dataset)
 - [Examples](#examples)
-- [Command line script](#Command line script)
+- [Command_line](#command_line)
 - [Pseudocode](#pseudocode)
 - [Acknowledgments](#acknowledgments)
 
