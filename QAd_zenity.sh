@@ -12,10 +12,18 @@
 	starttime=$(date +%s)
 
 # function must be declared before a call - unlike Python
+function zen_file(){
+	zenity --file-selection \
+	--title="Select stockfile.ini" \
+	--text="Select stockfile.ini : " 2>/dev/null
+
+	return $?
+}
+
 function zen_directory(){
 	zenity --file-selection \
-	--title="${soft_version}" \
-	--text="Select a directory to save your financial dataset : " \
+	--title="Dataset directory" \
+	--text="Select a dataset directory : " \
 	--directory 2>/dev/null
 
 	return $?
@@ -63,6 +71,7 @@ function zen_configuration(){
 # main script
 config=$(zen_configuration)
 folder=$(zen_directory)
+sfile=$(zen_file)
 
 aggregator=QAd_dataset-"$(date +%Y%m%d)".csv
 yuser=$(awk -F"," '{print $1}' <<<$config)
@@ -98,7 +107,7 @@ if [[ ! -w ./tmp/$aggregator ]]; then exit 1; fi
 # Load le fichier stock_config.ini dans un array
 # Contient une liste de stocks 'non-exotique' du TSX.
 declare -a arr
-readarray -t arr < TSX_minimal.ini
+readarray -t arr < $sfile
 arrayLen=${#arr[@]}
 
 # Fonction pour le download
