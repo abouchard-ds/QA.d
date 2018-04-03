@@ -7,25 +7,25 @@
 	set -o pipefail
 
 # global variable declaration
-	soft_version="QA.d downloader 1.2"
+	soft_version="QA.d downloader 1.3"
 	author="Alexandre Bouchard - https://github.com/data-scientia"
 	starttime=$(date +%s)
 
 # function must be declared before a call - unlike Python
 function zen_file(){
-	zenity --file-selection \
+	f=$(zenity --file-selection \
 	--title="Select stockfile.ini" \
-	--text="Select stockfile.ini : " 2>/dev/null
-
+	--text="Select stockfile.ini : " 2>/dev/null)
+	echo "${f}"
 	return $?
 }
 
 function zen_directory(){
-	zenity --file-selection \
+	d=$(zenity --file-selection \
 	--title="Dataset directory" \
 	--text="Select a dataset directory : " \
-	--directory 2>/dev/null
-
+	--directory 2>/dev/null)
+	echo "${d}"
 	return $?
 }
 
@@ -162,7 +162,7 @@ download | zenity --progress --title="${soft_version}" --text="" --percentage=0 
 
 # supprime les fichiers temporaires individuels
 rm -f ./tmp/*.dat
-mv ./tmp/$aggregator $folder/$aggregator
+mv ./tmp/${aggregator} "${folder}/${aggregator}"
 
 # preparations pour la fenetre de Summary
 filesize=$(du -sh $folder/$aggregator | awk '{print $1}')
