@@ -16,12 +16,14 @@ if [[ $# -lt 3 ]] ; then
 		exit 1
 fi
 
-aggregator=QAd_DATA-"$(date +%Y%m%d)".csv
+aggregator=QAd_dataset-"$(date +%Y%m%d)".csv
 yuser=$1
 ypass=$2
 sfile=$3
 postdata="user=${yuser}&password=${ypass}"
+# GMT: Friday, January 1, 1971 12:00:00 AM
 period1="31536000"
+# Midnight today
 period2=$(date -d 'today 00:00:00' +%s)
 sleeptime=0.5
 

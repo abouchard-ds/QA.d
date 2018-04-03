@@ -11,6 +11,7 @@
 - [Acknowledgments](#acknowledgments)
 
 ## Introduction
+
 <p align="center">
 
   <img src="https://img.shields.io/badge/bash-4.4.12-blue.svg">
@@ -34,6 +35,7 @@ The datasets you can create with this program can become of a sizable amount. If
 * A '*non graphical*' version is also available
 
 ## Installation
+
 The program has been developed and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop). The following packages are used by the script. Nothing fancy, it was all default install on Ubuntu 17.10.
 
 You'll need to have an account on Y! Finance to be able to download the data.
@@ -65,6 +67,7 @@ ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes
 ```
 
 ## Dataset
+
 As a data scientist, enthusiast or student having full knowledge of your dataset is important. The dataset created by QA.d could be described as:
 
 - Data source : Yahoo! Finance Canada;
@@ -99,7 +102,8 @@ Formated content example:
 
 
 ## Examples
-If you use the provided *tsx_tsxv.ini* and uses a Start Date of 1970, you'll get a file of 285M containing 3,339,114 records on ~1150 stocks.
+
+If you use the provided *TSX_clean.ini* and uses a Start Date of 1970, you'll get a file of 285M containing 3,339,114 records on ~1150 stocks.
 
 File provided in the examples folder was generated on April 2 2018 using *"tsx_tsxv.ini"* with a *"Start Date"* of March 1 2018.
 
@@ -136,26 +140,32 @@ I won't explain here what are these types of stocks but you can read [this page 
 
 Usage of the command line script (*QAd_terminal.sh*) is:
 ```bash
-$ QAd_terminal.sh username password stockfile
-or
-$ QAd_terminal.sh "user@yahoo" "password" TSX_tickers.txt
+$ ./QAd_terminal.sh "'user@yahoo'" "password" TSX_clean.ini
 ```
-Note that the command line script don't ask for a start date. This is because it always starts from ~1970 and end date is today thus downloading a full history for the stock in your parameter file.
+Note that the command line script don't ask for a start date. This is because it always ```START DATE``` is always *GMT: Friday, January 1, 1971 12:00:00 AM* and ```END DATE``` is *Today at midnight* thus downloading a full history for the stocks in your parameter file. There's also a sleep timer between download for 0.5 second which I find from experience does not lock my IP out of Yahoo.
 
-Output looks like:
+Output looks like the following:
 ```bash
-user@localhost:/github/data-scientia/QA.d$ ./QAd_terminal.sh "'user@yahoo'" "password" TSX_clean.ini
-QA.d downloader 1.2 -- Your dataset file is: QAd_DATA-20180403.csv
+user@localhost:/github/data-scientia/QA.d $ ./QAd_terminal.sh "'user@yahoo'" "password" TSX_clean.ini
+QA.d downloader 1.2 -- Your dataset file is: QAd_dataset-20180403.csv
 QA.d downloader 1.2 -- Your parameter file is : TSX_clean.ini
 Downloading data for:  AAB.TO
 Downloading data for:  AAR-UN.TO
-Downloading data for:  AAV.TO
-[...]
-
-
+            [...]
+Downloading data for:  PSA.TO
+Downloading data for:  PSB.TO
+            [...]
+Downloading data for:  ZYME.TO
+Downloading data for:  ZZZ.TO
+==================================================================================
+Download completed. Historical financial information for 1489 stocks.
+File name is : QAd_DATA-20180403.csv File has 3744812 lines for a size of 251M
+Runtime was  1431  seconds.
+==================================================================================
 ```
 
 ## Pseudocode
+
 Since this was created for learning/academic purpose I will add the pseudocode for a beginner who would like to understand the script and learn from it.
 
 1. Ask user for username, password and start date
@@ -179,6 +189,7 @@ Since this was created for learning/academic purpose I will add the pseudocode f
 10. Display a dialog summarizing the job and confirming it has been completed.
 
 ## Acknowledgments
+
 This program was created as a simple exercise to practice bash with zenity.
 Most zenity features are tested in this script.
 This was created from scratch without researching other programs would could do the same (if my code looks like yours - that's a random occurence).
