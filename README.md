@@ -7,6 +7,7 @@
 - [Installation](#installation)
 - [Dataset](#dataset)
 - [Examples](#examples)
+- [Command line script](#Command line script)
 - [Pseudocode](#pseudocode)
 - [Acknowledgments](#acknowledgments)
 
@@ -103,19 +104,21 @@ Formated content example:
 
 ## Examples
 
-If you use the provided *TSX_clean.ini* and uses a Start Date of 1970, you'll get a file of 285M containing 3,339,114 records on ~1150 stocks.
+If you use the provided *TSX_clean.ini* with a ```Start Date``` of 1971, you'll get a dataset of 251M containing 3,744,812 records on 1489 stocks. My runtime was 24 minutes for which half (~13 minutes) was for ```sleep```. I would not recommend removing the ```sleep```.
 
-File provided in the examples folder was generated on April 2 2018 using *"tsx_tsxv.ini"* with a *"Start Date"* of March 1 2018.
+QAd_dataset.csv provided in the examples folder was generated on April 3 2018 using *"TSX_minimal.ini"* with a *"Start Date"* of March 26 2018.
 
-Stocks ini files provided for testing are:
-- TSX_minimal.ini ( for light testing 369 random stocks from TSX)
+Stocks.ini files provided for testing are:
+- TSX_minimal.ini (314 random stocks from TSX)
 - TSX_clean.ini (1489 stocks from the TSX)
 - TSXV_clean.ini (XXX stocks from the TSX Venture)
 - TSX_TSXV_complete.ini (XXX stocks from TSX and TSXV)
 
-They exclude most exotic stock ticker like ".PR." ".F." ".WT." ".DB.".
+**Stock types excluded**
 
-I won't explain here what are these types of stocks but you can read [this page on Investopedia](https://www.investopedia.com/university/stocks/stocks2.asp) for more information (yes it looks like some people are still using \*.asp files).
+My Stocks.ini files exclude most exotic ticker like ".PR." ".F." ".WT." ".DB.".
+
+I won't explain here what are these types of stocks but you can read [this page on Investopedia](https://www.investopedia.com/university/stocks/stocks2.asp) for more information.
 
 | Ticker code | Describes                    | Status   |
 | ----------- | ---------------------------- | -------- |
@@ -137,7 +140,7 @@ I won't explain here what are these types of stocks but you can read [this page 
 | .DB.        | Debentures                   | Excluded |
 
 
-**Using the command line script**
+## Command line script
 
 Usage of the command line script (*QAd_terminal.sh*) is:
 ```bash
