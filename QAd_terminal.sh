@@ -39,12 +39,14 @@ touch ./tmp/$aggregator
 
 # Valide s'il peut ecrire dans le fichier que nous veons de creer. S'il ne peut pas exit avec code 1
 if [[ ! -w ./tmp/$aggregator ]]; then exit 1; fi
+echo "${aggregator} -> is your dataset file"
 
 # Load le fichier stock_config.ini dans un array
 # Contient une liste de stocks 'non-exotique' du TSX.
 declare -a arr
 readarray -t arr < $sfile
 arrayLen=${#arr[@]}
+echo "${sfile} -> parameter file loaded"
 
 # Fonction pour le download
 function download() {
@@ -54,7 +56,8 @@ function download() {
 	do
 
 		percentage=$(bc <<< "scale=4; ($index/$arrayLen)*100")
-		echo -ne "Progress percentage : " $percentage " %" '\r'
+		#echo -ne "Progress percentage : " $percentage " %" '\r'
+		#echo -ne "Downloading data for: " $STOCKS "" '\r'
 		echo "Downloading data for: " $STOCKS
 		filename=$STOCKS".dat"
 		# doit ajoute un error handling pour passer au suivant en cas d'erreur.

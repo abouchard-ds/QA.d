@@ -132,13 +132,20 @@ I won't explain here what are these types of stocks but you can read [this page 
 | .DB.        | Debentures                   | Excluded |
 
 
-** Using the command line script **
+**Using the command line script**
 
 Usage of the command line script (*QAd_terminal.sh*) is:
 ```bash
-QAd_terminal.sh username password stockfile
+$ QAd_terminal.sh username password stockfile
+or
+$ QAd_terminal.sh "user@yahoo" "password" TSX_tickers.txt
 ```
-Note that the command line script don't ask for a start date. This is because it always starts from ~1970 and end date is today thus downloading a full history for the stock in your parameter file. 
+Note that the command line script don't ask for a start date. This is because it always starts from ~1970 and end date is today thus downloading a full history for the stock in your parameter file.
+
+Output looks like:
+```bash
+Downloading data for : BCE.TO
+```
 
 ## Pseudocode
 Since this was created for learning/academic purpose I will add the pseudocode for a beginner who would like to understand the script and learn from it.
