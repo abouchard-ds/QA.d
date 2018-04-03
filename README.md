@@ -140,13 +140,13 @@ I won't explain here what are these types of stocks but you can read [this page 
 | .DB.        | Debentures                   | Excluded |
 
 
-## Command line script
+## Command_line
 
 Usage of the command line script (*QAd_terminal.sh*) is:
 ```bash
 $ ./QAd_terminal.sh "'user@yahoo'" "password" TSX_clean.ini
 ```
-Note that the command line script don't ask for a start date. This is because it always ```START DATE``` is always *GMT: Friday, January 1, 1971 12:00:00 AM* and ```END DATE``` is *Today at midnight* thus downloading a full history for the stocks in your parameter file. There's also a sleep timer between download for 0.5 second which I find from experience does not lock my IP out of Yahoo.
+Note that the command line script don't ask for a start date. This is because the ```START DATE``` is always *GMT: Friday, January 1, 1971 12:00:00 AM* and the ```END DATE``` is *Today at midnight* thus downloading a full history for your parameter file. There's a sleep timer of 0.5 second between downloads which I find from experience does not lock my IP out of Yahoo.
 
 Output looks like the following:
 ```bash
