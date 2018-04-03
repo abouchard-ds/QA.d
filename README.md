@@ -110,6 +110,14 @@ Stocks ini files provided for testing are:
 
 They exclude most exotic stock ticker like ".PR." ".F." ".WT." ".DB.".
 
+I won't explain here what are these types of stocks but you can read [this page on Investopedia](https://www.investopedia.com/university/stocks/stocks2.asp) for more information (yes it looks like some people are still using \*.asp files). 
+
+| Ticker code | Describes        | status   |
+| ----------- | ---------------- | -------- |
+| .UN.        |                  | Included |
+| .PR.        | Preferred shares | Excluded |
+| .WT.        | Warrant          | Excluded |
+
 ## Pseudocode
 Since this was created for learning/academic purpose I will add the pseudocode for a beginner who would like to understand the script and learn from it.
 
