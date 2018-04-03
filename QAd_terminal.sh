@@ -41,6 +41,7 @@ touch ./tmp/$aggregator
 
 # Valide s'il peut ecrire dans le fichier que nous veons de creer. S'il ne peut pas exit avec code 1
 if [[ ! -w ./tmp/$aggregator ]]; then exit 1; fi
+echo ""
 echo "${soft_version} -- Your dataset file is: ${aggregator}"
 
 # Load le fichier stock_config.ini dans un array
@@ -49,6 +50,7 @@ declare -a arr
 readarray -t arr < $sfile
 arrayLen=${#arr[@]}
 echo "${soft_version} -- Your parameter file is : ${sfile}"
+echo ""
 
 # Fonction pour le download
 function download() {

@@ -147,8 +147,10 @@ Note that the command line script don't ask for a start date. This is because it
 Output looks like the following:
 ```bash
 user@localhost:/github/data-scientia/QA.d $ ./QAd_terminal.sh "'user@yahoo'" "password" TSX_clean.ini
+
 QA.d downloader 1.2 -- Your dataset file is: QAd_dataset-20180403.csv
 QA.d downloader 1.2 -- Your parameter file is : TSX_clean.ini
+
 Downloading data for:  AAB.TO
 Downloading data for:  AAR-UN.TO
             [...]
