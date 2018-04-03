@@ -69,12 +69,21 @@ As a data scientist or enthusiast having full knowledge of your dataset is impor
 
 Data source : Yahoo! Finance Canada. Currency is CAD$
 
-Row example :
+Raw example :
 ```
-NTS.V,2018-01-09,1.390000,1.450000,1.350000,1.390000,1.390000,105100
+ZOM.V,2017-12-01,3.000000,3.100000,2.750000,2.750000,2.750000,51200
+ZOM.V,2017-12-04,3.000000,3.000000,3.000000,3.000000,3.000000,1000
+ZOM.V,2017-12-05,3.000000,3.000000,2.400000,2.450000,2.450000,12800
+ZOM.V,2017-12-06,2.940000,2.950000,2.710000,2.750000,2.750000,7100
+ZOM.V,2017-12-07,2.890000,2.890000,2.890000,2.890000,2.890000,500
+ZOM.V,2017-12-08,2.890000,2.890000,2.890000,2.890000,2.890000,0
 ```
 Where the columns are:
-TICKER, DATE, OPEN, HIGH, LOW,  CLOSE<sup>1</sup>,  ADJ CLOSE<sup>2</sup>,  VOLUME
+
+| TICKER | DATE       | OPEN     | HIGH     | LOW      | CLOSE<sup>1</sup> | ADJ CLOSE<sup>2</sup> | VOLUME |
+| -----  | -----      | -----    | -----    | ------   | ------            | ------                | -----  |
+| ZOM.V  | 2017-12-01 | 3.000000 | 3.100000 | 2.750000 | 2.750000          | 2.750000              | 51200  |
+| ZOM.V  | 2017-12-04 | 3.000000 | 3.000000 | 3.000000 | 3.000000          | 3.000000              | 1000   |
 
 <sup>1</sup>Close price adjusted for splits.
 
