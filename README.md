@@ -8,7 +8,6 @@
 - [Dataset](#dataset)
 - [Examples](#examples)
 - [Command_line](#command_line)
-- [Pseudocode](#pseudocode)
 - [Acknowledgments](#acknowledgments)
 
 ## Introduction
@@ -60,7 +59,6 @@ dpkg -l bash zenity bc gawk date wget whiptail
 
 You should get a somewhat similar return:
 ```bash
-$ dpkg -l bash zenity bc gawk date wget whiptail
 ||/ Name        Version          Architecture     Description
 +++-===========-================-================-===================================================
 ii  bash        4.4-5ubuntu1     amd64            GNU Bourne Again SHell
@@ -76,12 +74,14 @@ ii  whiptail    0.52.18-3ubunt   amd64            Displays user-friendly dialog 
 As a data scientist, enthusiast or student having full knowledge of your dataset is important. The dataset created by QA.d could be described as:
 
 - Data source : Yahoo! Finance Canada;
+
 - Prices are described at the 6th decimal point;
-- Prices currency is in CAD$;
+- Prices currency is CAD$;
 - Date field is formated as : YYYY-MM-DD;
-- Columns headers have been stripped from the dataset;
+- Columns headers are stripped from the dataset;
     - Insert ```TICKER,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME``` in first row if needed;
-- Day were the stock markets are closed don't appear in the file;
+- Off-trading days (stock markets closed) don't appear in the file;
+- The best data resolution offered by Y!Finance is *Daily Freq*;
 - Line feed is Unix '\n';
 
 Raw content example :
@@ -176,30 +176,6 @@ File name is : QAd_DATA-20180403.csv File has 3744812 lines for a size of 251M
 Runtime was  1431  seconds.
 ==================================================================================
 ```
-
-## Pseudocode
-
-Since this was created for learning/academic purpose I will add the pseudocode for a beginner who would like to understand the script and learn from it.
-
-1. Ask user for username, password and start date
-    * Validate input password since user can't see in field
-    * Validate input that start date is less than yesterday.
-2. Ask user where she wants to save the Dataset.CSV
-3. Process variables from validated input to forge the URL and the Dataset.CSV
-4. Create a ./tmp directory to put our temporary stock files during download
-5. Validate that no Dataset file exists for today and create one
-6. Read the stock parameter file (*tsx_minimal.ini*) into an array
-7. Enter a loop for each stocks :
-    * Gives the percentage of progress ```((index/arraySize)*100)``` this controls the zenity progress bar
-    * Gives the current stock being downloaded ("# abc" insure zenity uses this echo in it's progress window)
-    * Create a temporary stock file
-    * Download data into the temporary stock file (wget)
-    * Add the stock ticker at the beginning of each lines
-    * Remove header and null from temporary stock file
-    * Append the temporary file into the final Dataset.CSV
-8. Delete all temporary stock file
-9. Move the Dataset.CSV to the user specified location.
-10. Display a dialog summarizing the job and confirming it has been completed.
 
 ## Acknowledgments
 
