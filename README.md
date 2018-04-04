@@ -45,16 +45,16 @@ You'll need to have an account on Y! Finance to be able to download the data.
 
 | packages | description | explanation |
 |--|--|--|
-| bash 4.4.12 | GNU Bourne Again SHell | you need a new version because of the use of ```readarray``` |
-| zenity 3.24.0 | Display graphical dialog boxes from shell scripts | only tested on this version |
-| bc 1.06.95 | GNU bc arbitrary precision calculator language | only tested on this version |
 | awk 4.1.4 | GNU awk, a pattern scanning and processing language | only tested on this version |
-| wget 1.19.1 | retrieves files from the web | note that wget handles stuff with the cookies |
+| bash 4.4.12 | GNU Bourne Again SHell | you need a new version because of the use of ```readarray``` |
+| bc 1.06.95 | GNU bc arbitrary precision calculator language | only tested on this version |
 | whiptail 0.52.18 | Displays user-friendly dialog boxes from sh | only tested on this version |
+| wget 1.19.1 | retrieves files from the web | note that wget handles stuff with the cookies |
+| zenity 3.24.0 | Display graphical dialog boxes from shell scripts | only tested on this version |
 
 To validate that you have the prerequisites:
 ```bash
-dpkg -l bash zenity bc gawk date wget whiptail
+dpkg -l bash bc gawk wget whiptail zenity
 ```
 
 You'll get a similar return:
@@ -65,8 +65,8 @@ ii  bash        4.4-5ubuntu1     amd64            GNU Bourne Again SHell
 ii  bc          1.06.95-9build2  amd64            GNU bc arbitrary precision calculator language
 ii  gawk        1:4.1.4+dfsg-1   amd64            GNU awk, a pattern scanning and processing language
 ii  wget        1.19.1-3ubuntu1. amd64            retrieves files from the web
-ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes from shell scripts
 ii  whiptail    0.52.18-3ubunt   amd64            Displays user-friendly dialog boxes from sh
+ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes from shell scripts
 ```
 
 ## Dataset
@@ -153,7 +153,6 @@ Usage of the command line script (*QAd_terminal.sh*) is:
 ```bash
 $ ./QAd_terminal.sh "'user@yahoo'" "password" /path/to/Stocklist.ini
 ```
-
 
 Output looks like the following:
 ```bash
