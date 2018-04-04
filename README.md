@@ -22,11 +22,11 @@
 
 </p>
 
-QA.d (**Q**uantitative**A**nalysis**.d**ownloader) is a bash script to automatically download historical stock data from [Yahoo! Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F) (as data source) and format it as CSV file. It uses zenity to create a simple GUI. You can download historical data from anytime until yesterday at midnight (in the extent it is available on Y!Finance).
+QA.d (**Q**uantitative **A**nalysis **d**ataset) is a bash script to automatically download historical stock data from [Yahoo! Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)  and format it as CSV file. It can run as command line or with GUIs options. You can configure your dataset (in the extent of what's available on Y!Finance).
 
-This program was made as *a learning instrument* for bash scripting; dialogs creation with zenity/whiptail; to learn about Github, Jekyll and the Kanban board functionality.
+This program was made as *a learning instrument* for bash scripting; dialogs creation with zenity/whiptail; Github, Jekyll and the projet/kanban board functionality.
 
-The datasets created with this program can become of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, etc.) **you could get approximately 2Gb to 5Gb of data**.
+The datasets created with this program can become of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 2Gb to 5Gb of data.
 
 ## Features
 
@@ -39,7 +39,7 @@ The datasets created with this program can become of a sizable amount. If you ta
 
 ## Installation
 
-The program has been developed and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop). The following packages are used by the script. Nothing fancy, it was all default install on Ubuntu 17.10.
+The program has been developed and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop) and Linux on Windows 10 pro. The following packages are used by the script. It's all default install on Ubuntu.
 
 You'll need to have an account on Y! Finance to be able to download the data.
 * [Yahoo! Finance Account](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)
@@ -51,15 +51,16 @@ You'll need to have an account on Y! Finance to be able to download the data.
 | bc 1.06.95 | GNU bc arbitrary precision calculator language | only tested on this version |
 | awk 4.1.4 | GNU awk, a pattern scanning and processing language | only tested on this version |
 | wget 1.19.1 | retrieves files from the web | note that wget handles stuff with the cookies |
+| whiptail 0.52.18 | Displays user-friendly dialog boxes from sh | only tested on this version |
 
 To validate if you have the prerequisites:
 ```bash
-dpkg -l bash zenity bc gawk date wget
+dpkg -l bash zenity bc gawk date wget whiptail
 ```
 
 You should get a somewhat similar return:
 ```bash
-$ dpkg -l bash zenity bc gawk date wget
+$ dpkg -l bash zenity bc gawk date wget whiptail
 ||/ Name        Version          Architecture     Description
 +++-===========-================-================-===================================================
 ii  bash        4.4-5ubuntu1     amd64            GNU Bourne Again SHell
@@ -67,6 +68,7 @@ ii  bc          1.06.95-9build2  amd64            GNU bc arbitrary precision cal
 ii  gawk        1:4.1.4+dfsg-1   amd64            GNU awk, a pattern scanning and processing language
 ii  wget        1.19.1-3ubuntu1. amd64            retrieves files from the web
 ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes from shell scripts
+ii  whiptail    0.52.18-3ubunt   amd64            Displays user-friendly dialog boxes from sh
 ```
 
 ## Dataset
