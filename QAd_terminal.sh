@@ -2,9 +2,9 @@
 #
 
 # bash best practices
-	set -o errexit
-	set -o nounset
-	set -o pipefail
+set -o errexit
+set -o nounset
+set -o pipefail
 
 # global variable declaration
 soft_version="QA.d downloader 1.3"
