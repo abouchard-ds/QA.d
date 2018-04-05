@@ -81,14 +81,6 @@ period1=$(awk -F"," '{print $4}' <<<$config)
 period2=$(date -d 'today 00:00:00' +%s)
 
 newline=$'\n'
-#confirm_text="Y! user: ${yuser} ${newline} Y! pass:  ${ypass} ${newline} Start date: $((date -d period1)) ${newline} End date:  $((date -d period2))"
-
-# yes is 0  &  no is 1
-# will work on the confirmation text later
-#confirm=$(zenity --question --title="${soft_version}" --text="Are you sure" 2>/dev/null)
-#if [[ $confirm -eq 1 ]]
-#	then
-#		config=$(zen_configuration)
 
 # Creer un dossier dans le working directory pour acceullir les fichiers temporaires s'il n'existe pas
 mkdir -p ./tmp
@@ -167,8 +159,6 @@ mv ./tmp/${aggregator} "${folder}/${aggregator}"
 # preparations pour la fenetre de Summary
 filesize=$(du -sh $folder/$aggregator | awk '{print $1}')
 countline=$(cat $folder/$aggregator | wc -l)
-#start=period1=$(awk -F, '{print $4}' <<<$config)
-#end=period2=$(date -d 'today 00:00:00' +%s)
 endtime=$(date +%s)
 runtime=$((endtime-starttime))
 summary="Download completed. $newline Historical financial information for $arrayLen stocks.$newline File name is : $aggregator $newline File has $countline lines for a size of $filesize $newline Runtime was: $runtime seconds."
