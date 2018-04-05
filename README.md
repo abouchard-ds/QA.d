@@ -25,7 +25,7 @@ QA.d (**Q**uantitative **A**nalysis **d**ataset) is a bash script to automatical
 
 This program was made as *a learning instrument* for bash scripting; dialogs creation with zenity/whiptail; Github, Jekyll and the projet/kanban board functionality.
 
-The datasets created with this program can become of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 2Gb to 5Gb of data.
+The datasets created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 2Gb to 5Gb of data.
 
 ## Features
 
@@ -38,26 +38,26 @@ The datasets created with this program can become of a sizable amount. If you ta
 
 ## Installation
 
-The program has been developed and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop) and Linux on Windows 10 pro. The following packages are used by the script. It's all default install on Ubuntu.
+The program has been developed and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop) and Linux on Windows 10 pro. The following packages are used by the script. Usually default install on Ubuntu.
 
 You'll need to have an account on Y! Finance to be able to download the data.
 * [Yahoo! Finance Account](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)
 
 | packages | description | explanation |
 |--|--|--|
-| bash 4.4.12 | GNU Bourne Again SHell | you need a new version because of the use of ```readarray``` |
-| zenity 3.24.0 | Display graphical dialog boxes from shell scripts | only tested on this version |
-| bc 1.06.95 | GNU bc arbitrary precision calculator language | only tested on this version |
 | awk 4.1.4 | GNU awk, a pattern scanning and processing language | only tested on this version |
+| bash 4.4.12 | GNU Bourne Again SHell | you need a new version because of the use of ```readarray``` |
+| bc 1.06.95 | GNU bc arbitrary precision calculator language | only tested on this version |
 | wget 1.19.1 | retrieves files from the web | note that wget handles stuff with the cookies |
 | whiptail 0.52.18 | Displays user-friendly dialog boxes from sh | only tested on this version |
+| zenity 3.24.0 | Display graphical dialog boxes from shell scripts | only tested on this version |
 
-To validate if you have the prerequisites:
+To validate that you have the prerequisites:
 ```bash
-dpkg -l bash zenity bc gawk date wget whiptail
+dpkg -l bash bc gawk wget whiptail zenity
 ```
 
-You should get a somewhat similar return:
+You'll get a similar return:
 ```bash
 ||/ Name        Version          Architecture     Description
 +++-===========-================-================-===================================================
@@ -65,8 +65,8 @@ ii  bash        4.4-5ubuntu1     amd64            GNU Bourne Again SHell
 ii  bc          1.06.95-9build2  amd64            GNU bc arbitrary precision calculator language
 ii  gawk        1:4.1.4+dfsg-1   amd64            GNU awk, a pattern scanning and processing language
 ii  wget        1.19.1-3ubuntu1. amd64            retrieves files from the web
-ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes from shell scripts
 ii  whiptail    0.52.18-3ubunt   amd64            Displays user-friendly dialog boxes from sh
+ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes from shell scripts
 ```
 
 ## Dataset
@@ -77,7 +77,7 @@ As a data scientist, enthusiast or student having full knowledge of your dataset
 
 - Prices are described at the 6th decimal point;
 - Prices currency is CAD$;
-- Date field is formated as : YYYY-MM-DD;
+- Date field is formated as : ```YYYY-MM-DD```;
 - Columns headers are stripped from the dataset;
     - Insert ```TICKER,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME``` in first row if needed;
 - Off-trading days (stock markets closed) don't appear in the file;
@@ -108,57 +108,59 @@ Formated content example:
 
 ## Examples
 
-If you use the provided *TSX_clean.ini* with a ```Start Date``` of 1971, you'll get a dataset of 251M containing 3,744,812 records on 1489 stocks. My runtime was 24 minutes for which half (~13 minutes) was for ```sleep```. I would not recommend removing the ```sleep```.
+I used the *TSX.ini* (provided in /examples) with a ```Start Date``` of 1971 and got a 251M dataset containing 3,744,812 records on 1489 stocks. My runtime was 24 minutes for which half (~13 minutes) was for ```sleep```. I would not recommend removing the ```sleep 0.5``` in the loop since you could get IP/hostname/username blocked.
 
-QAd_dataset.csv provided in the examples folder was generated on April 3 2018 using *"TSX_minimal.ini"* with a *"Start Date"* of March 26 2018.
+The QAd_dataset.csv provided in the /examples shows what the dataset looks like. 
 
-Stocks.ini files provided for testing are:
-- TSX_minimal.ini       (314  random stocks from TSX)
-- TSX_clean.ini         (1489 stocks from the TSX)
-- TSXV_clean.ini        (1522 stocks from the TSX Venture)
+I'm providing some Stocks.ini files for testing:
+- Test_mini.ini         (67 random stocks from TSX)
+- Test_medium.ini       (314 random stocks from TSX)
+- TSX.ini               (1489 stocks from the TSX)
+- TSXV.ini              (1522 stocks from the TSX Venture)
 - TSX_TSXV_complete.ini (3011 stocks from TSX and TSXV)
 
-**Stock types excluded**
+**Stock types excluded from the files**
 
-My Stocks.ini files exclude most exotic ticker like ".PR." ".F." ".WT." ".DB.".
+My Stocks.ini files exclude most exotic tickers like ".PR." ".F." ".WT." ".DB." and should include all "common stocks" for their relative stock exchanges. I do not provide support on those files but feel free to add better ones if you have.
 
 I won't explain here what are these types of stocks but you can read [this page on Investopedia](https://www.investopedia.com/university/stocks/stocks2.asp) for more information.
 
 | Ticker code | Describes                    | Status   |
 | ----------- | ---------------------------- | -------- |
 | .UN.        | Real estate investment trust / Income Fund | Included |
-| .PR.        | Preferred shares             | Excluded |
+| .PR.,PF,PS  | Preferred shares             | Excluded |
 | .WT.        | Warrant                      | Excluded |
-|.NT. |||
+| .NT.        | Notes                        | Excluded |
 | .A.         | Class                        | Included |
 | .B.         | Class                        | Included |
 | .C.         | Class                        | Included |
 | .D.         | Class                        | Included |
-| .F.         | F                            | Excluded |
-|.L. |||
-|.N. |||
-| .R.         | Receipts                     | Excluded |
+| .F.         | Founders                     | Excluded |
+| .L.         | Legended                     | Excluded |
+| .N.         | Subscription Receipts 2nd iss| Excluded |
+| .R.         | Subscription Receipts        | Excluded |
 | .U.         | USD$                         | Excluded |
 | .X.         | Class                        | Excluded |
-| .Y.         | Class                        | Excluded |
+| .Y.         | Redeemable commons           | Excluded |
 | .DB.        | Debentures                   | Excluded |
 
 
 ## Command_line
 
+The command line script don't ask for a start date. This is because the ```START DATE``` is always *GMT: Friday, January 1, 1971 12:00:00 AM* and the ```END DATE``` is *Today at midnight* thus downloading a full history for your Stocklist file. There's a sleep timer of 0.5 second between downloads which I find from experience does not lock my IP out of Yahoo.
+
 Usage of the command line script (*QAd_terminal.sh*) is:
 ```bash
-$ ./QAd_terminal.sh "'user@yahoo'" "password" TSX_clean.ini
+$ ./QAd_terminal.sh "'user@yahoo'" "password" /path/to/Stocklist.ini
 ```
-Note that the command line script don't ask for a start date. This is because the ```START DATE``` is always *GMT: Friday, January 1, 1971 12:00:00 AM* and the ```END DATE``` is *Today at midnight* thus downloading a full history for your parameter file. There's a sleep timer of 0.5 second between downloads which I find from experience does not lock my IP out of Yahoo.
 
 Output looks like the following:
 ```bash
 user@localhost:/github/data-scientia/QA.d $ ./QAd_terminal.sh "'user@yahoo'" "password" TSX_clean.ini
 
 ==================================================================================
-QA.d downloader 1.2 -- Your dataset file is: QAd_dataset-20180403.csv
-QA.d downloader 1.2 -- Your parameter file is : TSX_clean.ini
+QA.d downloader 1.3 -- Your dataset file is: QAd_dataset-20180403.csv
+QA.d downloader 1.3 -- Your parameter file is : TSX.ini
 ==================================================================================
 
 Downloading data for:  AAB.TO
@@ -181,5 +183,4 @@ Runtime was  1431  seconds.
 
 This program was created as a simple exercise to practice bash with zenity.
 Most zenity features are tested in this script.
-This was created from scratch without researching other programs would could do the same (if my code looks like yours - that's a random occurence).
-The dataset generated is still of good use since Yahoo blocked their Finance API.
+This was created from scratch without researching other programs would could do the same (if my code looks like something else - that's a random occurence).
