@@ -46,7 +46,7 @@ You'll need to have an account on Y! Finance to be able to download the data.
 | packages | description | explanation |
 |--|--|--|
 | awk 4.1.4 | GNU awk, a pattern scanning and processing language | only tested on this version |
-| bash 4.4.12 | GNU Bourne Again SHell | you need a new version because of the use of ```readarray``` |
+| bash 4.4.12 | GNU Bourne Again SHell | you need a recent shell because of the use of ```readarray``` |
 | bc 1.06.95 | GNU bc arbitrary precision calculator language | only tested on this version |
 | wget 1.19.1 | retrieves files from the web | note that wget handles stuff with the cookies |
 | whiptail 0.52.18 | Displays user-friendly dialog boxes from sh | only tested on this version |
