@@ -8,7 +8,7 @@ set -o pipefail
 
 # global variable declaration
 soft_version="QA.d downloader 1.3"
-author="Alexandre Bouchard - https://github.com/data-scientia"
+author="Alexandre Bouchard - https://github.com/abouchard-ds"
 starttime=$(date +%s)
 
 if [[ $# -lt 3 ]] ; then
