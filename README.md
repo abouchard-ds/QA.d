@@ -183,4 +183,4 @@ Runtime was  1431  seconds.
 
 This program was created as a simple exercise to practice bash with zenity.
 Most zenity features are tested in this script.
-This was created from scratch without researching other programs would could do the same (if my code looks like something else - that's a random occurence).
+This was created from scratch without researching other programs would could do the same.
