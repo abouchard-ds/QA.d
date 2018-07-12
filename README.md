@@ -108,7 +108,7 @@ Formated content example:
 
 ## Examples
 
-I used the *TSX.ini* (provided in /examples) with a ```Start Date``` of 1971 and got a 251M dataset containing 3,744,812 records on 1489 stocks. My runtime was 24 minutes for which half (~13 minutes) was for ```sleep```. I would not recommend removing the ```sleep 0.5``` in the loop since you could get IP/hostname/username blocked.
+I used the *TSX.ini* (provided in /examples) with a ```Start Date``` of 1971 and got a 251M dataset containing 3,744,812 observations on 1489 stocks. My runtime was 24 minutes for which half (~13 minutes) was for ```sleep```. I would not recommend removing the ```sleep 0.5``` in the loop since you could get IP/hostname/username blocked.
 
 The QAd_dataset.csv provided in the /examples shows what the dataset looks like. 
 
