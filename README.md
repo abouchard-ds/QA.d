@@ -40,7 +40,7 @@ The datasets created with this program can be of a sizable amount. If you take a
 
 The program has been developed and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop) and Ubuntu 18.04 desktop and Linux on Windows 10 pro. The following packages are used by the script. Usually default install on Ubuntu.
 
-You'll need to have an account on Y! Finance to be able to download the data.
+You'll need to have an account on Y! Finance to be able to download the data (as CSV. I found a way to get it without an account but only in JSON format).
 * [Yahoo! Finance Account](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)
 
 | packages | description | explanation |
