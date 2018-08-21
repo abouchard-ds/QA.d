@@ -21,7 +21,7 @@
 
 </p>
 
-QA.d (**Q**uantitative **A**nalysis **d**ataset) is a simple bash script to automatically download historical stock data from [Yahoo! Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)  and format it as CSV file. It can run as command line or with GUIs options. You can configure your dataset (in the extent of what's available on Y!Finance).
+QA.d (**Q**uantitative **A**nalysis **d**ataset) is a simple bash script to automatically download historical stock data from [Yahoo! Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)  and format it as CSV/JSON file. It can run as command line or with GUIs options. You can configure your dataset (in the extent of what's available on Y!Finance).
 
 This program was made as *a learning instrument* for bash scripting; dialogs creation with zenity/whiptail; Github, Jekyll and the projet/kanban board functionality.
 
