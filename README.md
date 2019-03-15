@@ -21,9 +21,9 @@
 
 </p>
 
-## ! Update : upcoming R, Python and VBA (excel) versions !
+## Presentation
 
-QA.d (**Q**uantitative **A**nalysis **d**ataset) is a simple bash script to automatically download historical stock data from [Yahoo! Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)  and format it as CSV/JSON file. It can run as command line or with GUIs options. You can configure your dataset (in the extent of what's available on Y!Finance).
+QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of a bash script to automatically download historical stock data from [Yahoo! Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F) and format it as CSV/JSON file. It can run as command line or with GUIs options. You can configure your dataset (in the extent of what's available on Y!Finance).
 
 This program was made as *a learning instrument* for bash scripting; dialogs creation with zenity/whiptail; Github, Jekyll and the projet/kanban board functionality.
 
@@ -31,16 +31,19 @@ The datasets created with this program can be of a sizable amount. If you take a
 
 ## Features
 
-* Easily create variable size datasets for free
-* Personalize your historical stock datasets
-* Almost no dependencies, packages are default
-* The GUI follows your personnal Linux theme
-* A '*non graphical*' version is also available
+* Easily create variable size;
+* Personalize your historical stock datasets;
+* The simplest way to do it, no need of Python or R or special libraries, this is the simplest expression made with base OS;
+* Almost no dependencies, packages are default;
+* The GUI follows your personnal Linux theme;
+* A '*non graphical*' version is also available;
+* Usefull if you want to practice statistics, modeling, finance;
+* Usefull if you want to practice data wrangling on files;
 * Who knows? You could become a millionnaire using your dataset to make financial decisions
 
 ## Installation
 
-The program has been developed and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop) and Ubuntu 18.04 desktop and Linux on Windows 10 pro. The following packages are used by the script. Usually default install on Ubuntu.
+The program has been coded and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop) and Ubuntu 18.04 desktop and Linux on Windows 10 pro. The following packages are used by the script. Usually default install on Ubuntu.
 
 You'll need to have an account on Y! Finance to be able to download the data (as CSV. I found a way to get it without an account but only in JSON format).
 * [Yahoo! Finance Account](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)
@@ -73,9 +76,9 @@ ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes
 
 ## Dataset
 
-As a data scientist, enthusiast or student having full knowledge of your dataset is important. The dataset created by QA.d could be described as:
+As a data scientist, trader, enthusiast or student having full knowledge of your dataset is important. The dataset created by QA.d could be described as:
 
-- Data source : Yahoo! Finance Canada;
+- Data source : Yahoo! Finance Canada (Toronto Stock Exchange available);
 
 - Prices are described at the 6th decimal point;
 - Prices currency is CAD$;
@@ -83,7 +86,7 @@ As a data scientist, enthusiast or student having full knowledge of your dataset
 - Columns headers are stripped from the dataset;
     - Insert ```TICKER,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME``` in first row if needed;
 - Off-trading days (stock markets closed) don't appear in the file;
-- The best data resolution offered by Y!Finance is *Daily Freq*;
+- The best data resolution offered by Y!Finance with this method is *Daily Freq*;
 - Line feed is Unix '\n';
 
 Raw content example :
@@ -183,6 +186,6 @@ Runtime was  1431  seconds.
 
 ## Acknowledgments
 
-This program was created as a simple exercise to practice bash with zenity.
+This project was created as a simple exercise to practice bash with zenity.
 Most zenity features are tested in this script.
 This was created from scratch without researching other programs would could do the same.
