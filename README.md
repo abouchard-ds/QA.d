@@ -33,7 +33,7 @@ The datasets created with this program can be of a sizable amount. If you take a
 
 ## Features
 
-* Easily create variable size;
+* Easily create datasets of variable size;
 * Personalize your historical stock datasets;
 * The simplest way to do it, no need of Python or R or special libraries, this is the simplest expression made with base OS;
 * Almost no dependencies, packages are default;
