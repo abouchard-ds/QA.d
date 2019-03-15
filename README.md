@@ -10,6 +10,8 @@
 - [Command_line](#command_line)
 - [Acknowledgments](#acknowledgments)
 
+- [See Product example](https://github.com/abouchard-ds/QA.d/blob/master/examples/QAd_dataset_minimal-20180403.csv)
+
 ## Introduction
 
 <p align="center">
