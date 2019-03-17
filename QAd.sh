@@ -28,7 +28,19 @@ aggregator=QAd_dataset-"$(date +%Y%m%d)".csv
 newline=$'\n'
 sleeptime=0.1
 unsafe=""
+tmpdir="./.downloads/"
 
+# TODO: Trap signals(interrupts): http://man7.org/linux/man-pages/man7/signal.7.html
+#   EXIT        EXIT      0         termine correctement
+#   SIGHUP      HUP       1         termine avec erreur
+#   SIGINT      INT       2         control+C
+#   SIGQUIT     QUIT      3
+#   SIGKILL     KILL      9
+#   SIGTERM     TERM      15
+# trap trap_int INT               # ex.: run fonction trap_int s'il trap un CTRL+C
+
+# don't think like it's 1985, try to make it object-oriented. It simplifies
+# reading the script execution (kind of __init__ main) and code reuse.
 function usage() {
   cat <<EOF
   Quantitative Analysis Dataset Creator ${SCRIPT_VER}
@@ -53,6 +65,10 @@ function usage() {
   info: ${GITHUB}
 EOF
 }
+
+# function available() {
+#  # bc was not installed on ubuntu 18.04
+# }
 
 function getConfiguredClient() {
   if command -v wget &>/dev/null; then
@@ -86,11 +102,30 @@ function isEmailaddress() {
   fi
 }
 
+# work in progress
+function generateList() {
+    i=0
+    declare -a URL_LIST
+    for STOCKS in "${STOCK_LIST[@]}"
+    do
+        url="https://query1.finance.yahoo.com/v7/finance/download/${STOCKS}?period1=${period1}&period2=${period2}&interval=1d&events=history"
+        URL_LIST[$i]=${url}
+        i=$(($i+1))
+    done
+}
+
+# work in progress - it seems like it misses some. file is half the expected size
+# wget -q -O - --post-data ${postdata} '{}' >> ./${aggregator}
+# may be too fast for yahoo
+#function downloadParrallel() {
+#    echo ${url}_LIST | xargs -I '{}' -n 1 -P 8 { sleep 0.5; wget -q -O - --post-data ${postdata} '{}' >> ./${aggregator}; }
+#}
+
 function download() {
 
 	index=1
 
-	for STOCKS in "${arr[@]}"
+	for STOCKS in "${STOCK_LIST[@]}"
 	do
 		percentage=$(bc <<< "scale=4; ($index/$arrayLen)*100")
     clear >$(tty)
@@ -99,43 +134,43 @@ function download() {
 		declare -l filename=${STOCKS}".dat"
 
 		url="https://query1.finance.yahoo.com/v7/finance/download/${STOCKS}?period1=${period1}&period2=${period2}&interval=1d&events=history"
-    wget -q -O ./.tmp/$filename --post-data $postdata $url
+    wget -q -O ${tmpdir}${filename} --post-data ${postdata} ${url}
 
     if [ $? -eq 0 ]; then
       case "$STOCKS" in
         %5EVIX)
-          sed -i -r "s/^/VIX,/g" ./.tmp/$filename 
+          sed -i -r "s/^/VIX,/g" ${tmpdir}${filename} 
           ;;
         %5EGSPC)
-          sed -i -r "s/^/SP500,/g" ./.tmp/$filename 
+          sed -i -r "s/^/SP500,/g" ${tmpdir}${filename} 
           ;;
         %5EDJI)
-          sed -i -r "s/^/DJIA,/g" ./.tmp/$filename 
+          sed -i -r "s/^/DJIA,/g" ${tmpdir}${filename} 
           ;;
         %5EGSPTSE)
-          sed -i -r "s/^/SPTSE,/g" ./.tmp/$filename 
+          sed -i -r "s/^/SPTSE,/g" ${tmpdir}${filename} 
           ;;
         *)
-          sed -i -r "s/^/${STOCKS},/g" ./.tmp/$filename 
+          sed -i -r "s/^/${STOCKS},/g" ${tmpdir}${filename} 
           ;;
       esac
 
-      sed -i '1d' ./.tmp/$filename
-      sed -i "s/null//g" ./.tmp/$filename
-      if [ $colnames ]; then sed -i '1s/^/SYMBOL,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME\n/' ./.tmp/$filename; fi
+      sed -i '1d' ${tmpdir}${filename}
+      sed -i "s/null//g" ${tmpdir}${filename}
+      if [ $colnames ]; then sed -i '1s/^/SYMBOL,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME\n/' ${tmpdir}${filename}; fi
 
       if [ ! $keep_all ]; then 
-          cat ./.tmp/$filename >> ./$aggregator
-          rm -f ./.tmp/$filename
+          cat ${tmpdir}${filename} >> ./${aggregator}
+          rm -f ${tmpdir}${filename}
       fi
 
       printf "${STOCKS}${newline}" >> ${logResume}
-      if [ ! $unsafe ]; then sleep ${sleeptime}; fi
+      if [ ! "$unsafe" ]; then sleep ${sleeptime}; fi
       index=$((index + 1))
 
     else
       printf "${STOCKS}${newline}" >> ${logError}
-      rm ./.tmp/$filename
+      rm ${tmpdir}${filename}
       index=$((index + 1))
     fi
 	done
@@ -144,11 +179,13 @@ function download() {
 # __init__ main script
 # ###########################################################################
 
+# number of args before entering getopts parsing
 if [ $# -lt 6 ]; then
     echo "Invalid number of arguments. Try qad.sh -h to get help."
     exit 1
 fi
 
+# TODO : multiple identical options are possible (-a -a -a)
 while getopts ":u:p:l:ckmnsVh" opt; do
   case $opt in
       u)
@@ -198,6 +235,7 @@ while getopts ":u:p:l:ckmnsVh" opt; do
   esac
 done
 
+# you need an internet connection
 getConfiguredClient
 checkConnectivity || exit 1
 
@@ -207,23 +245,30 @@ logError="./.qad_error.log"
 
 if [ -s ${logResume} ]; then
   resume=$(tail -n 1 ${logResume})
-  if [ $verbose ]; then echo "NOTICE: could resume to ${resume} if it was implemented."; fi
+  if [ $verbose ]; then echo "NOTICE: could resume from ${resume} if it was implemented."; fi
 else    
   touch ${logResume}
 fi
 
 # PREPARE FOLDER AND FILE
-mkdir -p ./.tmp
 
-if [ -f ./$aggregator ] ; then
-    rm ./$aggregator
+# Creer un dossier dans le working directory pour acceuillir les fichiers temporaires s'il n'existe pas
+mkdir -p ${tmpdir}
+
+# Regarde s'il y a deja un fichier pour aujourd'hui et le supprime
+# ici ca depend du resume feature
+if [ -f ./${aggregator} ] ; then
+    rm ./${aggregator}
+    # if [ ! $resume ]; then rm ./${aggregator}; fi
 fi
 
-touch ./$aggregator
-if [[ ! -w ./$aggregator ]]; then exit 1; fi
+# Creer le fichier aggregation pour aujourd'hui
+touch ./${aggregator}
+if [[ ! -w ./${aggregator} ]]; then exit 1; fi
 
 touch ${logError}
-touch ./$aggregator
+touch ./${aggregator}
+# if [[ ! -w ./${aggregator} ]]; then exit 1; fi
 
 
 # PRINT LA CONFIG
@@ -232,18 +277,19 @@ if [ $verbose ]; then
     echo "=================================================================================="
     echo "Your dataset file is: ${aggregator}"
     echo "Your stock file is : ${stockfile}"
-    echo "Your file contains "$(wc -l $stockfile)" stocks"
+    echo "Your file contains "$(wc -l ${stockfile})" stocks"
     echo "=================================================================================="
     echo ""
 fi
 
 # DOWNLOAD
-declare -a arr
-readarray -t arr < $stockfile
-arrayLen=${#arr[@]}
+# Load le fichier stocklist dans un array
+declare -a STOCK_LIST
+readarray -t STOCK_LIST < ${stockfile}
+arrayLen=${#STOCK_LIST[@]}
 
 postdata="user=${username}&password=${password}"
-
+# avoid script exit on download error
 set +e
 download
 set -e
@@ -251,12 +297,14 @@ set -e
 
 # CLEANUP
 if [ ! $keep_all ]; then 
-    rm -rf ./.tmp/
+    # remove folder and files if any
+    rm -rf ${tmpdir}
 else
-    cat ./.tmp/*.dat >> ./$aggregator
+    # at this point with keep_all option there is no BIGFILE
+    cat ${tmpdir}*.dat >> ./${aggregator}
 fi
 
-sed -i '1s/^/SYMBOL,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME\n/' ./$aggregator
+sed -i '1s/^/SYMBOL,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME\n/' ./${aggregator}
 
 if [ ! -s ${logError} ]; then rm ${logError}; fi
 
@@ -265,18 +313,19 @@ if [ $cleanup_missing ]; then
     grep -Fvxf ${logError} ${stockfile}.bak > ${stockfile}
 fi
 
+# can remove since it was successfully completed
 rm ${logResume}
 
 # SUMMARY STATISTICS
 # benchmarking and optimization 
 if [ $verbose ]; then
-    filesize=$(du -sh ./$aggregator | awk '{print $1}')
-    countline=$(cat ./$aggregator | wc -l)
+    filesize=$(du -sh ./${aggregator} | awk '{print $1}')
+    countline=$(cat ./${aggregator} | wc -l)
     endtime=$(date +%s)
     runtime=$((endtime-starttime))
     summary1="Download completed. $newline Historical financial information for $arrayLen stocks."
-    summary2="File name is : $aggregator $newline File has $countline lines for a size of $filesize"
-    avgfilesize=$(ls -l ./.tmp/ | gawk '{sum += $5; n++;} END {print sum/n;}')
+    summary2="File name is : ${aggregator} $newline File has $countline lines for a size of $filesize"
+    avgfilesize=$(ls -l ${tmpdir} | gawk '{sum += $5; n++;} END {print sum/n;}')
     badstocks=$(wc -l ${logError})
 
     function printsummary() {
