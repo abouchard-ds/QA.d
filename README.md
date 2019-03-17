@@ -29,7 +29,7 @@ QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting o
 
 This program was made as *a learning instrument* for bash scripting; dialogs creation with zenity/whiptail; Github, Jekyll and the projet/kanban board functionality.
 
-The datasets created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 2Gb to 5Gb of data (~16,000 individual files and a big file of 3gb). Used to test the new Oracle features on external tables when Oracle Corporation released it (so an ETL from the internet using this script and an external table on the STOCK file). 
+The datasets created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 2Gb to 5Gb of data (~16,000 individual files and a big file of 3gb - 44,500,000 observations). Used to test the new Oracle features on external tables when Oracle Corporation released it (so an ETL from the internet using this script and an external table on the STOCK file). 
 
 ## Features
 
