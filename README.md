@@ -25,11 +25,11 @@
 
 ## Presentation
 
-QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of a bash script to automatically download historical stock data from [Yahoo! Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F) and format it as CSV/JSON file. It can run as command line or with GUIs options. You can configure your dataset (in the extent of what's available on Y!Finance).
+QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of a bash script to automatically download historical stock information from [Yahoo Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F) as CSV/JSON file. It can run as command line or with GUIs options. You can configure your dataset (in the extent of what's available on Y!Finance).
 
-This program was made as *a learning instrument* for bash scripting; dialogs creation with zenity/whiptail; Github, Jekyll and the projet/kanban board functionality.
+A dataset created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 4gb of real data (~16,000 individual files and a big file of 3gb containing 44,500,000 observations). 
 
-The datasets created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 2Gb to 5Gb of data (~16,000 individual files and a big file of 3gb - 44,500,000 observations). Used to test the new Oracle features on external tables when Oracle Corporation released it (so an ETL from the internet using this script and an external table on the STOCK file). 
+Used to test Oracle database features on external tables, transaction benchmarks, ETLs, statistical analysis, machine learning algorithms. Another use case could be to experiment on changing the file from 1 fil per STOCK to 1 file per day.
 
 ## Features
 
@@ -39,6 +39,7 @@ The datasets created with this program can be of a sizable amount. If you take a
 * Almost no dependencies, packages are default;
 * The GUI follows your personnal Linux theme;
 * A '*non graphical*' version is also available;
+* The data is real and can in itself be usefull;
 * Usefull if you want to practice statistics, modeling, finance;
 * Usefull if you want to practice data wrangling on files;
 * Who knows? You could become a millionnaire using your dataset to make financial decisions
