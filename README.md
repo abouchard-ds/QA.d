@@ -8,9 +8,6 @@
 - [Dataset](#dataset)
 - [Examples](#examples)
 - [Command_line](#command_line)
-- [Acknowledgments](#acknowledgments)
-
-- [See Product example](https://github.com/abouchard-ds/QA.d/blob/master/examples/QAd_dataset_minimal-20180403.csv)
 
 ## Introduction
 
@@ -18,16 +15,17 @@
 
   <img src="https://img.shields.io/badge/bash-4.4.12-blue.svg">
   <img src="https://img.shields.io/badge/zenity-3.24.0-green.svg">
-  <img src="https://img.shields.io/badge/whiptail-0.52.18-yellow.svg">
   <img src="https://img.shields.io/badge/powered%20by-jekyll-red.svg">
 
 </p>
 
 ## Presentation
 
-QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of a bash script to automatically download historical stock information from [Yahoo Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F) as CSV/JSON file. It can run as command line or with GUIs options.
+QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of bash scripts to automatically download historical stock data as CSV/JSON file.
 
-A dataset created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 4gb of real data (~16,000 individual files and a big file of 3gb containing 44,500,000 observations). 
+A dataset created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 4gb of data (~16,000 individual files and a big file of 3gb containing 44,500,000 observations). 
+
+## Objective
 
 Used to test some database external tables features, transaction benchmarks, ETLs, statistical analysis, machine learning algorithms. Another use case could be to experiment on changing the file from 1 file per stock to 1 file per day.
 
@@ -82,7 +80,9 @@ ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes
 
 As a data scientist, trader, enthusiast or student having full knowledge of your dataset is important. The dataset created by QA.d could be described as:
 
-- Data source : Yahoo! Finance Canada (Toronto Stock Exchange available);
+- Data source : Yahoo! Finance Canada;
+
+- *Update* : Now we cannot download farther than 1996.
 
 - Prices are described at the 6th decimal point;
 - Prices currency is CAD$;
@@ -158,14 +158,15 @@ I won't explain here what are these types of stocks but you can read [this page 
 
 The command line script don't ask for a start date. This is because the ```START DATE``` is always *GMT: Friday, January 1, 1971 12:00:00 AM* and the ```END DATE``` is *Today at midnight* thus downloading a full history for your Stocklist file. There's a sleep timer of 0.5 second between downloads which I find from experience does not lock my IP out of Yahoo.
 
-Usage of the command line script (*QAd_terminal.sh*) is:
+Usage of the command line script (*qad.sh*) is:
 ```bash
-$ ./QAd_terminal.sh "'user@yahoo'" "password" /path/to/Stocklist.ini
+$ ./qad.sh -u "'user@yahoo'" -p "password" -l stocklist.ini
 ```
 
 Output looks like the following:
 ```bash
-user@localhost:/github/data-scientia/QA.d $ ./QAd_terminal.sh "'user@yahoo'" "password" TSX_clean.ini
+user@localhost:/github/data-scientia/QA.d $ ./qad.sh -u "'user@yahoo'" -p "password" -l stocklist.ini
+```
 
 ==================================================================================
 QA.d downloader 1.3 -- Your dataset file is: QAd_dataset-20180403.csv
