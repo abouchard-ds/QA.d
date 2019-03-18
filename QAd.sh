@@ -66,21 +66,17 @@ function usage() {
 EOF
 }
 
-
 function timestamp() {
   date +"%Y-%m-%d %T"
 }
-
 
 function getConfiguredClient() {
 #: getConfiguredClient()
 #: search for and prioritize the tool to use
   if command -v wget &>/dev/null; then
     configuredClient="wget"
-    if [ $verbose ]; then echo "configuredClient is ${configuredClient}"; fi
   elif command -v curl &>/dev/null; then
     configuredClient="curl"
-    if [ $verbose ]; then echo "configuredClient is ${configuredClient}"; fi
   else
     echo "Error: This tool requires either wget or curl to be installed." >&2
     return 1
@@ -156,7 +152,7 @@ function download() {
 		echo -ne "Downloading ${STOCKS} data: (${percentage}%) of total completed.\r"
 		
 		local url="https://query1.finance.yahoo.com/v7/finance/download/${STOCKS}?period1=${period1}&period2=${period2}&interval=1d&events=history"
-    wget -q -O ${tmpdir}${filename} --post-data ${postdata} ${url}
+    wget -q -O ${tmpdir}${filename} --post-data ${postdata} ${url} || true
 
     if [ $? -eq 0 ]; then
       case "$STOCKS" in
@@ -304,17 +300,16 @@ if [ $verbose ]; then
   echo ""
 fi
 
-# DOWNLOAD
+# PREPARE FOR DOWNLOAD
 declare -a STOCK_LIST
 readarray -t STOCK_LIST < ${stockfile}
 arrayLen=${#STOCK_LIST[@]}
 
 postdata="user=${username}&password=${password}"
-# avoid script exit on download error
-set +e
 # clear >$(tty)
+
+# DOWNLOAD
 download
-set -e
 
 # MANAGE AGGREGATOR FILE
 if [ ! $keep_all ]; then 
@@ -325,7 +320,7 @@ fi
 
 sed -i '1s/^/SYMBOL,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME\n/' ./${aggregator}
 
-# CLEANUP
+# CLEANUP STOCKFILE
 if [ $cleanup_missing ]; then
   mv ${stockfile} ${stockfile}.bak
   grep -Fvxf ${logError} ${stockfile}.bak > ${stockfile}
@@ -334,6 +329,7 @@ if [ $cleanup_missing ]; then
   fi
 fi
 
+# CLEANUP LOGS
 if [ ! -s ${logError} ]; then rm ${logError}; fi
 rm ${logResume}
 
