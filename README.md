@@ -25,11 +25,11 @@
 
 ## Presentation
 
-QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of a bash script to automatically download historical stock information from [Yahoo Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F) as CSV/JSON file. It can run as command line or with GUIs options. You can configure your dataset (in the extent of what's available on Y!Finance).
+QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of a bash script to automatically download historical stock information from [Yahoo Finance](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F) as CSV/JSON file. It can run as command line or with GUIs options.
 
 A dataset created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 4gb of real data (~16,000 individual files and a big file of 3gb containing 44,500,000 observations). 
 
-Used to test Oracle database features on external tables, transaction benchmarks, ETLs, statistical analysis, machine learning algorithms. Another use case could be to experiment on changing the file from 1 fil per STOCK to 1 file per day.
+Used to test some database external tables features, transaction benchmarks, ETLs, statistical analysis, machine learning algorithms. Another use case could be to experiment on changing the file from 1 file per stock to 1 file per day.
 
 ## Features
 
@@ -48,7 +48,8 @@ Used to test Oracle database features on external tables, transaction benchmarks
 
 The program has been coded and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop) and Ubuntu 18.04 desktop and Linux on Windows 10 pro. The following packages are used by the script. Usually default install on Ubuntu.
 
-You'll need to have an account on Y! Finance to be able to download the data (as CSV. I found a way to get it without an account but only in JSON format).
+You'll need to have an account on Y! Finance to be able to download the data 
+
 * [Yahoo! Finance Account](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)
 
 | packages | description | explanation |
@@ -186,9 +187,3 @@ File name is : QAd_DATA-20180403.csv File has 3744812 lines for a size of 251M
 Runtime was  1431  seconds.
 ==================================================================================
 ```
-
-## Acknowledgments
-
-This project was created as a simple exercise to practice bash with zenity.
-Most zenity features are tested in this script.
-This was created from scratch without researching other programs would could do the same.
