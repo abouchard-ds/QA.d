@@ -21,11 +21,23 @@
 
 ## Presentation
 
-QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of bash scripts to automatically download historical stock data as CSV/JSON file.
+QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of bash scripts to automatically download historical stock data as CSV/JSON files.
 
-A dataset created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 4gb of data (~16,000 individual files and a big file of 3gb containing 44,500,000 observations). 
+A dataset created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 4gb of data (**~16,000 individual files and a big file of 3gb containing 44,500,000 observations**). 
 
 ## Objective
+The project is about generating a large amount of data related to each other in multiple files and/or one big file. The goal is to create a dataset so I can work from there with other tools.
+
+- this is a bash scripting project; exploring the limitations and benefits
+- nothing is faster than base OS level stuff, if it can be done relatively simply with the base, why do it differently?
+- the goal is simulating big data stuff: ingestion, data wrangling/munging, simulating ETLs once you have all those files
+- practice parralel processing (xargs, parralel,...) on multiple files
+- practice with multiples files in Python and R or both (py2R, feather)
+- load those files into an HDFS (hadoop distributed file system)
+- maybe you want to practice Excel at its maximum capacity
+- importing data in a database, exploring external tables and so on
+- doing something uncommon (you always see this done in python and R)
+- the data is real, you could take financial decisions too
 
 Used to test some database external tables features, transaction benchmarks, ETLs, statistical analysis, machine learning algorithms. Another use case could be to experiment on changing the file from 1 file per stock to 1 file per day.
 
