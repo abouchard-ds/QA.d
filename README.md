@@ -21,25 +21,24 @@
 
 ## Presentation
 
-QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of bash scripts to automatically download historical stock data as CSV/JSON files.
+QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of bash scripts to automatically create a dataset by downloading historical stock data as CSV/JSON files.
 
 A dataset created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 4gb of data (**~16,000 individual files and a big file of 3gb containing 44,500,000 observations**). 
 
 ## Objective
-The project is about generating a large amount of data related to each other in multiple files and/or one big file. The goal is to create a dataset so I can work from there with other tools.
+The project is about generating a large amount of data related to each other in multiple files and/or one big file. More specifically:
 
-- this is a bash scripting project; exploring the limitations and benefits
-- nothing is faster than base OS level stuff, if it can be done relatively simply with the base, why do it differently?
-- the goal is simulating big data stuff: ingestion, data wrangling/munging, simulating ETLs once you have all those files
-- practice parralel processing (xargs, parralel,...) on multiple files
-- practice with multiples files in Python and R or both (py2R, feather)
-- load those files into an HDFS (hadoop distributed file system)
-- maybe you want to practice Excel at its maximum capacity
-- importing data in a database, exploring external tables and so on
-- doing something uncommon (you always see this done in python and R)
-- the data is real, you could take financial decisions too
-
-Used to test some database external tables features, transaction benchmarks, ETLs, statistical analysis, machine learning algorithms. Another use case could be to experiment on changing the file from 1 file per stock to 1 file per day.
+- this is a bash scripting project; exploring the limitations and benefits of bash;
+- nothing is faster than base OS level: if it can be done relatively simply with the base, why do it differently;
+- the goal is simulating big data stuff: ingestion, data wrangling/preprocessing, simulating ETLs;
+- practice parralel processing (xargs, parralel,...) on multiple files;
+- practice with multiples files in Python and R or both (py2R, feather);
+- load those files into an HDFS (hadoop distributed file system);
+- maybe you want to practice with Excel at its maximum capacity;
+- importing data in multiple database engine, exploring external tables and so on;
+- doing something uncommon (you'll always see this done in python and R, which are slower and need installation);
+- transaction benchmarking, hardware/os testing, statistical analysis, machine learning algorithms;
+- the data is real, you could take financial decisions with it.
 
 ## Features
 
@@ -53,6 +52,24 @@ Used to test some database external tables features, transaction benchmarks, ETL
 * Usefull if you want to practice statistics, modeling, finance;
 * Usefull if you want to practice data wrangling on files;
 * Who knows? You could become a millionnaire using your dataset to make financial decisions
+
+### BIG DATA ETL SIMULATION
+You can randomly distribute the files between multiple servers and try to recover a full dataset. You can try out an ingestion pipeline for benchmarking or an ETL for correctness. You can stress test some program (*SPSS, SAS, RapidMiner, Enteprise Miner, Python, R, Octave, Matlab, Orange, Tableau, Excel, Access, bash, Spark, anything*).
+
+### FILES VERSUS IN MEMORY
+You may want to experiment with big data, distributed file systems or parralelization? Then you need a lot of structured, semi-structured, unstructured files. This is a good project for you. 
+
+### STOCKLIST CURATION
+If the data itself if of interest to you, you have the option to configure the stocklist that the program will download with a simple text file. If a stock does not exist anymore (mergers, bankruptcy, you downloaded an old list of symbols, etc.) the program can remove the bad entries from your stocklist automatically or you can consult the .stock.error file.
+
+### The "LIGHT option" - 1 BIGFILE
+If getting all the text files is not for you but you only want one massive file (3Gb ++) for your studies/test/project. (Random sampling test avg size per file 220K) min 88b max 512k. Using the full_us_can.txt stockfile I get 4gb of data (~16,000 individual files and a big file of 3-4gb containing 44,500,000 observations/lines/rows).
+
+### RESUMABLE
+Downloading all the canadian and american historical stock data since 1996 will take a couple of hours.(random sampling test avg 0.7733 second per stock - approx. 4 hours for 16500 files). So if your program crashes or you issue a CTRL-C, you can resume your download later if you activate this parameter.
+
+### NON-FEATURE
+My goal is to increase the types, size and number of files generated. If you want to be very selective on the dates, type, stocks etc. You can do it after the creation of the dataset or use another tool made for this. (thousands of python and R libraries made for this purpose. not this script)
 
 ## Installation
 
@@ -90,17 +107,16 @@ ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes
 
 ## Dataset
 
-As a data scientist, trader, enthusiast or student having full knowledge of your dataset is important. The dataset created by QA.d could be described as:
+As a data scientist, data engineer, trader, enthusiast or student having full knowledge of your dataset is important. The dataset created by QA.d is described as:
 
 - Data source : Yahoo! Finance Canada;
-
-- *Update* : Now we cannot download farther than 1996.
 
 - Prices are described at the 6th decimal point;
 - Prices currency is CAD$;
 - Date field is formated as : ```YYYY-MM-DD```;
+- No data available prior to 1996;
 - Columns headers are stripped from the dataset;
-    - Insert ```TICKER,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME``` in first row if needed;
+    - Insert ```SYMBOL,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME``` in first row if needed;
 - Off-trading days (stock markets closed) don't appear in the file;
 - The best data resolution offered by Y!Finance with this method is *Daily Freq*;
 - Line feed is Unix '\n';
