@@ -3,8 +3,10 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Objectives](#objectives)
 - [Features](#features)
 - [Installation](#installation)
+- [Parameters](#parameters)
 - [Dataset](#dataset)
 - [Examples](#examples)
 - [Command_line](#command_line)
@@ -23,20 +25,21 @@
 
 QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of bash scripts to automatically create a dataset by downloading historical stock data as CSV/JSON files.
 
-A dataset created with this program can be of a sizable amount. If you take all Canadian and American stocks without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately 4gb of data (**~16,000 individual files and a big file of 3gb containing 44,500,000 observations**). 
+A dataset created with this program can be of a sizable amount. If you take all canadian and american securities without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately >4gb of data (**~16,000 individual files and a big file containing ~44,500,000 observations**). 
+
 
 ## Objective
 The project is about generating a large amount of data related to each other in multiple files and/or one big file. More specifically:
 
-- this is a bash scripting project; exploring the limitations and benefits of bash;
-- nothing is faster than base OS level: if it can be done relatively simply with the base, why do it differently;
-- the goal is simulating big data stuff: ingestion, data wrangling/preprocessing, simulating ETLs;
+- this is a bash project; exploring the limitations and benefits of bash;
+- nothing is faster than base OS level: if it can be done relatively simply with bash, why do it differently;
+- simulating big data stuff: data ingestion, data wrangling/preprocessing, simulating ETLs;
 - practice parralel processing (xargs, parralel,...) on multiple files;
-- practice with multiples files in Python and R or both (py2R, feather);
+- practice with multiples files in Python, R and both;
 - load those files into an HDFS (hadoop distributed file system);
 - maybe you want to practice with Excel at its maximum capacity;
 - importing data in multiple database engine, exploring external tables and so on;
-- doing something uncommon (you'll always see this done in python and R, which are slower and need installation);
+- the pleasure of doing something uncommon (you'll always see this done in python and R, which have overhead and need installation);
 - transaction benchmarking, hardware/os testing, statistical analysis, machine learning algorithms;
 - the data is real, you could take financial decisions with it.
 
@@ -73,9 +76,9 @@ My goal is to increase the types, size and number of files generated. If you wan
 
 ## Installation
 
-The program has been coded and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop) and Ubuntu 18.04 desktop and Linux on Windows 10 pro. The following packages are used by the script. Usually default install on Ubuntu.
+The program has been coded and tested on [Ubuntu 17.10 Desktop](https://www.ubuntu.com/download/desktop), Ubuntu 18.04 desktop and Linux on Windows 10 pro (WSL). The following packages are used by the script they should be default install on Ubuntu.
 
-You'll need to have an account on Y! Finance to be able to download the data 
+You'll need to have an account on Y! Finance (API Key) to be able to download the data 
 
 * [Yahoo! Finance Account](https://login.yahoo.com/config/login?.intl=ca&.lang=en-CA&.src=finance&.done=https%3A%2F%2Fca.finance.yahoo.com%2F)
 
@@ -104,6 +107,10 @@ ii  wget        1.19.1-3ubuntu1. amd64            retrieves files from the web
 ii  whiptail    0.52.18-3ubunt   amd64            Displays user-friendly dialog boxes from sh
 ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes from shell scripts
 ```
+
+## Parameters
+
+
 
 ## Dataset
 
@@ -188,12 +195,12 @@ The command line script don't ask for a start date. This is because the ```START
 
 Usage of the command line script (*qad.sh*) is:
 ```bash
-$ ./qad.sh -u "'user@yahoo'" -p "password" -l stocklist.ini
+$ ./qad.sh -u "user@yahoo" -p "password" -l "stocklist.ini"
 ```
 
 Output looks like the following:
 ```bash
-user@localhost:/github/data-scientia/QA.d $ ./qad.sh -u "'user@yahoo'" -p "password" -l stocklist.ini
+user@localhost:/github/data-scientia/QA.d $ ./qad.sh -u "user@yahoo" -p "password" -l "stocklist.ini" -V
 ```
 
 ==================================================================================
