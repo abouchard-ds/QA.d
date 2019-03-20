@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 #
 
-#:  <- this indicates docstring in this script.
+# hopefully following Google's Bash styleguide
+# https://google.github.io/styleguide/shell.xml
+
 set -o errexit
 set -o nounset
 set -o pipefail
 
-declare -r SCRIPT_VER=2.1
-declare -r AUTHOR="Alexandre Bouchard"
-declare -r GITHUB="https://github.com/abouchard-ds/QA.d/"
+readonly SCRIPT_VER=2.1
+readonly AUTHOR="Alexandre Bouchard"
+readonly GITHUB="https://github.com/abouchard-ds/QA.d/"
 
 # declare and initialize variables with deafult values
 # "" evaluate to FALSE in a -> if [ "$verbose" ]; scenario
@@ -21,16 +23,17 @@ colnames=""
 keep_all=""
 resumable=""
 cleanup_missing=""
-starttime=$(date +%s)
-newline=$'\n'
-sleeptime=0.1
 unsafe=""
-tmpdir="./.downloads/"
+readonly starttime=$(date +%s)
+readonly newline=$'\n'
+readonly sleeptime=0.1
+readonly tmpdir="./.downloads/"
 
 # GMT: Friday, January 1, 1971 12:00:00 AM
-period1="31536000"
-period2=$(date -d 'today 00:00:00' +%s)
-aggregator=QAd_dataset-"$(date +%Y%m%d)".csv
+readonly period1="31536000"
+readonly period2=$(date -d 'today 00:00:00' +%s)
+readonly logError="./.qad_error.log"
+readonly aggregator=QAd_dataset-"$(date +%Y%m%d)".csv
 
 # TODO: Trap signals(interrupts): http://man7.org/linux/man-pages/man7/signal.7.html
 #   EXIT        EXIT      0         termine correctement
@@ -66,8 +69,8 @@ function usage() {
 EOF
 }
 
-function timestamp() {
-  date +"%Y-%m-%d %T"
+function err() {
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2
 }
 
 function getConfiguredClient() {
@@ -78,7 +81,7 @@ function getConfiguredClient() {
   elif command -v curl &>/dev/null; then
     configuredClient="curl"
   else
-    echo "Error: This tool requires either wget or curl to be installed." >&2
+    err "Error: This tool requires either wget or curl to be installed."
     return 1
   fi
 }
@@ -95,7 +98,7 @@ function httpGet() {
 function checkConnectivity() {
 #: checkConnectivity() 
 #: validate for internet connectivity
-  httpGet github.com > /dev/null 2>&1 || { echo "Error: no active internet connection" >&2; return 1; }
+  httpGet github.com > /dev/null 2>&1 || { err "Error: no active internet connection"; return 1; }
 }
 
 function validemail() {
@@ -104,6 +107,7 @@ function validemail() {
   if [[ "$1" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$ ]]; then
       return 0
   else
+      err "Error: Your username should be an email."
       return 1
   fi
 }
@@ -113,7 +117,7 @@ function generateList() {
 #: generate an associative array of urls and write the urls to a file
 #: assume the stocklist have been read to array STOCK_LIST
   if [ $# -ne 4 ]; then
-    echo "generateList() need an url type -u and an output file -o."
+    err "generateList() need an url type -u and an output file -o."
     return 1
   else
     while getopts ":t:o:" opt; do
@@ -199,7 +203,7 @@ function download() {
 
 # number of args before entering getopts parsing
 if [ $# -lt 6 ]; then
-    echo "Invalid number of arguments. Try qad.sh -h to get help."
+    err "Invalid number of arguments. Try qad.sh -h to get help."
     usage
     exit 1
 fi
@@ -207,7 +211,7 @@ fi
 # bc needed to calculate percent of progress
 command -v bc > /dev/null 2>&1
 if [ $? -eq 1 ]; then
-    echo "You need to install bc (a calculator)."
+    err "You need to install bc (a calculator)."
     exit 1
 fi
 
@@ -219,15 +223,16 @@ while getopts ":u:p:l:ckmrsVh" opt; do
         if $(validemail ${OPTARG}); then
           username=${OPTARG}
         else
-          "Option -u requires a valid email address." >&2
+          err "Option -u requires a valid email address."
           exit 1
         fi ;;
       p) password=${OPTARG} ;;
       l)
         if [ -s ${OPTARG} ]; then
-          stockfile=${OPTARG} 
+          stockfile=${OPTARG}
+	  readonly logResume="./.qad_resume_${stockfile}_$(date +%Y%m%d).log"
         else
-          "Option -l requires an existing, non-empty file." >&2
+          err "Option -l requires an existing, non-empty file."
           exit 1
         fi ;;
       c) colnames=true ;;
@@ -239,11 +244,11 @@ while getopts ":u:p:l:ckmrsVh" opt; do
       V) verbose=true ;;
       h) usage ;;
       \?)
-        echo "Invalid option: -${OPTARG}. Try qad.sh -h to get help." >&2
+        err "Invalid option: -${OPTARG}. Try qad.sh -h to get help."
         usage
         exit 1 ;;
       :)
-        echo "Option -${OPTARG} requires an argument." >&2
+        err "Option -${OPTARG} requires an argument."
         usage
         exit 1 ;;
   esac
@@ -254,9 +259,6 @@ getConfiguredClient
 checkConnectivity || exit 1
 
 # RESUME FEATURE
-logError="./.qad_error.log"
-logResume="./.qad_resume_${stockfile}_$(date +%Y%m%d).log"
-
 mkdir -p ${tmpdir}
 
 if [ -f ${logError} ]; then 
@@ -271,26 +273,26 @@ if [ -s ${logResume} ]; then
     if [ $verbose ]; then 
       echo "RESUMING : ${logResume} was found and last stock was ${resume}." 
     fi
-    grep -Fvxf ${logResume} ${stockfile} > "${stockfile}.tmp"
+    grep -Fvxf "${logResume}" "${stockfile}" > "${stockfile}.tmp"
     stockfile="${stockfile}.tmp"
   else
-    rm ${logResume} 
-    if [ -f ./${aggregator} ]; then 
-      rm ./${aggregator}
+    rm "${logResume}"
+    if [ -f "./${aggregator}" ]; then 
+      rm "./${aggregator}"
     fi
-    touch ${logResume}
-    touch ./${aggregator}
+    touch "${logResume}"
+    touch "./${aggregator}"
   fi
 else
-  touch ${logResume}
-  if [ -f ./${aggregator} ]; then 
-    rm ./${aggregator}
+  touch "${logResume}"
+  if [ -f "./${aggregator}" ]; then 
+    rm "./${aggregator}"
   fi
-  touch ./${aggregator}
+  touch "./${aggregator}"
 fi
 
 # PRINT CONFIGURATION
-if [ $verbose ]; then
+if [ "${verbose}" ]; then
   echo ""
   echo "=================================================================================="
   echo "Your dataset file is: ${aggregator}"
@@ -302,54 +304,54 @@ fi
 
 # PREPARE FOR DOWNLOAD
 declare -a STOCK_LIST
-readarray -t STOCK_LIST < ${stockfile}
+readarray -t STOCK_LIST < "${stockfile}"
 arrayLen=${#STOCK_LIST[@]}
 
-postdata="user=${username}&password=${password}"
+readonly postdata="user=${username}&password=${password}"
 # clear >$(tty)
 
 # DOWNLOAD
 download
 
 # MANAGE AGGREGATOR FILE
-if [ ! $keep_all ]; then 
-  rm -rf ${tmpdir}
+if [ ! "${keep_all}" ]; then 
+  rm -rf "${tmpdir}"
 else
-  cat ${tmpdir}*.dat >> ./${aggregator}
+  cat "${tmpdir}*.dat" >> "./${aggregator}"
 fi
 
-sed -i '1s/^/SYMBOL,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME\n/' ./${aggregator}
+sed -i '1s/^/SYMBOL,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME\n/' "./${aggregator}"
 
 # CLEANUP STOCKFILE
-if [ $cleanup_missing ]; then
-  mv ${stockfile} ${stockfile}.bak
-  grep -Fvxf ${logError} ${stockfile}.bak > ${stockfile}
-  if [ ! -s ${logError} ]; then 
-    rm ${logError}
+if [ "${cleanup_missing}" ]; then
+  mv "${stockfile}" "${stockfile}.bak"
+  grep -Fvxf "${logError}" "${stockfile}.bak" > "${stockfile}"
+  if [ ! -s "${logError}" ]; then 
+    rm "${logError}"
   fi
 fi
 
 # CLEANUP LOGS
-if [ ! -s ${logError} ]; then rm ${logError}; fi
-rm ${logResume}
+if [ ! -s "${logError}" ]; then rm "${logError}"; fi
+rm "${logResume}"
 
 # SUMMARY STATISTICS
 # benchmarking and optimization 
-if [ $verbose ]; then
-  filesize=$(du -sh ./${aggregator} | awk '{print $1}')
-  countline=$(cat ./${aggregator} | wc -l)
-  endtime=$(date +%s)
-  runtime=$((endtime-starttime))
-  summary1="Download completed. $newline Historical financial information for $arrayLen stocks."
-  summary2="File name is : ${aggregator} $newline File has $countline lines for a size of $filesize"
-  avgfilesize=$(ls -l ${tmpdir} | gawk '{sum += $5; n++;} END {print sum/n;}')
-  badstocks=$(wc -l ${logError})
+if [ "${verbose}" ]; then
+  readonly filesize=$(du -sh "./${aggregator}" | awk '{print $1}')
+  readonly countline=$(cat "./${aggregator}" | wc -l)
+  readonly endtime=$(date +%s)
+  readonly runtime=$((endtime-starttime))
+  readonly summary1="Download completed. ${newline} Historical financial information for ${arrayLen} stocks."
+  readonly summary2="File name is : ${aggregator} ${newline} File has ${countline} lines for a size of ${filesize}"
+  readonly avgfilesize=$(ls -l "${tmpdir}" | gawk '{sum += $5; n++;} END {print sum/n;}')
+  readonly badstocks=$(wc -l ${logError})
 
   function printsummary() {
     echo ""
     echo "=================================================================================="
-    echo $summary1
-    echo $summary2
+    echo "${summary1}"
+    echo "${summary2}"
     echo "Average individual file size is : ${avgfilesize}"
     echo "The was ${badstocks} Symbols not found on Yahoo."
     echo "Runtime was ${runtime} seconds."
@@ -359,3 +361,5 @@ if [ $verbose ]; then
   printsummary
 
 fi
+
+# should end by a main()
