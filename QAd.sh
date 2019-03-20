@@ -77,9 +77,9 @@ function getConfiguredClient() {
 #: getConfiguredClient()
 #: search for and prioritize the tool to use
   if command -v wget &>/dev/null; then
-    configuredClient="wget"
+    readonly configuredClient="wget"
   elif command -v curl &>/dev/null; then
-    configuredClient="curl"
+    readonly configuredClient="curl"
   else
     err "Error: This tool requires either wget or curl to be installed."
     return 1
@@ -89,9 +89,9 @@ function getConfiguredClient() {
 function httpGet() {
 #: httpGet() 
 #: function to download data in function of the configuredClient
-  case "$configuredClient" in
-    wget)  wget -qO- "$@" ;;
-    curl)  curl -A curl -s "$@" ;;
+  case "${configuredClient}" in
+    wget) wget -qO- "$@" ;;
+    curl) curl -A curl -s "$@" ;;
   esac
 }
 
@@ -146,7 +146,7 @@ function generateList() {
 function download() {
 #: download()
 #: does the main job of this script. assume the stocklist have been read to array STOCK_LIST
-	local index=1
+	local -i index=1
 
 	for STOCKS in "${STOCK_LIST[@]}"
 	do
@@ -177,25 +177,45 @@ function download() {
           ;;
       esac
 
-      sed -i '1d' ${tmpdir}${filename}
-      sed -i "s/null//g" ${tmpdir}${filename}
-      if [ $colnames ]; then sed -i '1s/^/SYMBOL,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME\n/' ${tmpdir}${filename}; fi
+      sed -i '1d' "${tmpdir}${filename}"
+      sed -i "s/null//g" "${tmpdir}${filename}"
+      if [ "${colnames}" ]; then sed -i '1s/^/SYMBOL,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME\n/' "${tmpdir}${filename}"; fi
 
-      if [ ! $keep_all ]; then 
-          cat ${tmpdir}${filename} >> ./${aggregator}
-          rm -f ${tmpdir}${filename}
+      if [ ! "${keep_all}" ]; then 
+          cat "${tmpdir}${filename}" >> "./${aggregator}"
+          rm -f "${tmpdir}${filename}"
       fi
 
       printf "${STOCKS}${newline}" >> ${logResume}
       if [ ! "$unsafe" ]; then sleep ${sleeptime}; fi
       index=$((index + 1))
-
     else
-      printf "${STOCKS}${newline}" >> ${logError}
-      rm ${tmpdir}${filename}
+      printf "${STOCKS}${newline}" >> "${logError}"
+      rm "${tmpdir}${filename}"
       index=$((index + 1))
     fi
 	done
+}
+
+function printsummary() {
+
+    local -r filesize=$(du -sh "./${aggregator}" | awk '{print $1}')
+    local -r countline=$(cat "./${aggregator}" | wc -l)
+    local -r endtime=$(date +%s)
+    local -r runtime=$((endtime-starttime))
+    local -r summary1="Download completed. ${newline} Historical financial information for ${arrayLen} stocks."
+    local -r summary2="File name is : ${aggregator} ${newline} File has ${countline} lines for a size of ${filesize}"
+    local -r avgfilesize=$(ls -l "${tmpdir}" | gawk '{sum += $5; n++;} END {print sum/n;}')
+    local -r badstocks=$(wc -l ${logError})
+    
+    echo ""
+    echo "=================================================================================="
+    echo "${summary1}"
+    echo "${summary2}"
+    echo "Average individual file size is : ${avgfilesize}"
+    echo "The was ${badstocks} Symbols not found on Yahoo."
+    echo "Runtime was ${runtime} seconds."
+    echo "=================================================================================="
 }
 
 # __init__ main script
@@ -209,6 +229,7 @@ if [ $# -lt 6 ]; then
 fi
 
 # bc needed to calculate percent of progress
+# ici faire un array des required et passer dans un for
 command -v bc > /dev/null 2>&1
 if [ $? -eq 1 ]; then
     err "You need to install bc (a calculator)."
@@ -218,15 +239,15 @@ fi
 # TODO > check for duplicate: multiple identical options are possible (-a -a -a)
 # TODO > help -h make no sense. it cannot be triggered. placed 'usage' elsewhere for the moment
 while getopts ":u:p:l:ckmrsVh" opt; do
-  case $opt in
+  case "$opt" in
       u)
         if $(validemail ${OPTARG}); then
-          username=${OPTARG}
+          readonly username=${OPTARG}
         else
           err "Option -u requires a valid email address."
           exit 1
         fi ;;
-      p) password=${OPTARG} ;;
+      p) readonly password=${OPTARG} ;;
       l)
         if [ -s ${OPTARG} ]; then
           stockfile=${OPTARG}
@@ -235,13 +256,13 @@ while getopts ":u:p:l:ckmrsVh" opt; do
           err "Option -l requires an existing, non-empty file."
           exit 1
         fi ;;
-      c) colnames=true ;;
-      k) keep_all=true ;;
-      m) cleanup_missing=true ;;
-      n) new=true ;;
-      r) resumable=true ;;
-      s) unsafe=true ;;
-      V) verbose=true ;;
+      c) readonly colnames=true ;;
+      k) readonly keep_all=true ;;
+      m) readonly cleanup_missing=true ;;
+      n) readonly new=true ;;
+      r) readonly resumable=true ;;
+      s) readonly unsafe=true ;;
+      V) readonly verbose=true ;;
       h) usage ;;
       \?)
         err "Invalid option: -${OPTARG}. Try qad.sh -h to get help."
@@ -259,18 +280,18 @@ getConfiguredClient
 checkConnectivity || exit 1
 
 # RESUME FEATURE
-mkdir -p ${tmpdir}
+mkdir -p "${tmpdir}"
 
-if [ -f ${logError} ]; then 
-  rm ${logError} 
+if [ -f "${logError}" ]; then 
+  rm "${logError}"
 else
-  touch ${logError}
+  touch "${logError}"
 fi
 
-if [ -s ${logResume} ]; then
-  if [ "$resumable" ]; then
-    resume=$(tail -n 1 ${logResume})
-    if [ $verbose ]; then 
+if [ -s "${logResume}" ]; then
+  if [ "${resumable}" ]; then
+    resume=$(tail -n 1 "${logResume}")
+    if [ "${verbose}" ]; then 
       echo "RESUMING : ${logResume} was found and last stock was ${resume}." 
     fi
     grep -Fvxf "${logResume}" "${stockfile}" > "${stockfile}.tmp"
@@ -305,6 +326,7 @@ fi
 # PREPARE FOR DOWNLOAD
 declare -a STOCK_LIST
 readarray -t STOCK_LIST < "${stockfile}"
+readonly STOCK_LIST
 arrayLen=${#STOCK_LIST[@]}
 
 readonly postdata="user=${username}&password=${password}"
@@ -332,34 +354,13 @@ if [ "${cleanup_missing}" ]; then
 fi
 
 # CLEANUP LOGS
-if [ ! -s "${logError}" ]; then rm "${logError}"; fi
+if [ -s "${logError}" ]; then rm "${logError}"; fi
 rm "${logResume}"
 
 # SUMMARY STATISTICS
 # benchmarking and optimization 
 if [ "${verbose}" ]; then
-  readonly filesize=$(du -sh "./${aggregator}" | awk '{print $1}')
-  readonly countline=$(cat "./${aggregator}" | wc -l)
-  readonly endtime=$(date +%s)
-  readonly runtime=$((endtime-starttime))
-  readonly summary1="Download completed. ${newline} Historical financial information for ${arrayLen} stocks."
-  readonly summary2="File name is : ${aggregator} ${newline} File has ${countline} lines for a size of ${filesize}"
-  readonly avgfilesize=$(ls -l "${tmpdir}" | gawk '{sum += $5; n++;} END {print sum/n;}')
-  readonly badstocks=$(wc -l ${logError})
-
-  function printsummary() {
-    echo ""
-    echo "=================================================================================="
-    echo "${summary1}"
-    echo "${summary2}"
-    echo "Average individual file size is : ${avgfilesize}"
-    echo "The was ${badstocks} Symbols not found on Yahoo."
-    echo "Runtime was ${runtime} seconds."
-    echo "=================================================================================="
-  }
-
   printsummary
-
 fi
 
 # should end by a main()
