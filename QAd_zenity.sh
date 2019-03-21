@@ -11,7 +11,7 @@
 	author="Alexandre Bouchard - https://github.com/abouchard-ds"
 	starttime=$(date +%s)
 
-# function must be declared before a call - unlike Python
+
 function zen_file(){
 	f=$(zenity --file-selection \
 	--title="Select stockfile.ini" \
