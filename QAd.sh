@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 #
 
-# hopefully following Google's Bash styleguide
-# https://google.github.io/styleguide/shell.xml
-
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -33,7 +30,7 @@ readonly tmpdir="./.downloads/"
 readonly period1="31536000"
 readonly period2=$(date -d 'today 00:00:00' +%s)
 readonly logError="./.qad_error.log"
-readonly aggregator=QAd_dataset-"$(date +%Y%m%d)".csv
+readonly aggregator="QAd_dataset-"$(date +%Y%m%d)".csv"
 
 # TODO: Trap signals(interrupts): http://man7.org/linux/man-pages/man7/signal.7.html
 #   EXIT        EXIT      0         termine correctement
@@ -43,6 +40,8 @@ readonly aggregator=QAd_dataset-"$(date +%Y%m%d)".csv
 #   SIGKILL     KILL      9
 #   SIGTERM     TERM      15
 # trap trap_int INT               # ex.: run fonction trap_int s'il trap un CTRL+C
+
+# TODO: Implement a logging function
 
 function usage() {
   cat <<EOF
@@ -120,7 +119,7 @@ function generateList() {
     err "generateList() need an url type -u and an output file -o."
     return 1
   else
-    while getopts ":t:o:" opt; do
+    while getopts ":u:o:" opt; do
       case $opt in
         t) local -r urltype=${OPTARG} ;;
         o) local -r outfile=${OPTARG} ;;
@@ -131,12 +130,13 @@ function generateList() {
     for STOCKS in "${STOCK_LIST[@]}"
     do
         local URL="https://query1.finance.yahoo.com/v7/finance/download/${STOCKS}?period1=${period1}&period2=${period2}&interval=1d&events=history"
-        URL_LIST[$STOCKS]=${URL}
-        echo ${URL} >> ${outfile}
+        URL_LIST[$STOCKS]="${URL}"
+        echo "${URL}" >> "${outfile}"
     done
   fi
 }
 
+# TODO: implement parralelization for download
 # may be too fast for yahoo
 #function downloadParrallel() {
 # wget -q -O - --post-data ${postdata} '{}' >> ./${aggregator}
@@ -150,31 +150,21 @@ function download() {
 
 	for STOCKS in "${STOCK_LIST[@]}"
 	do
-    local filename=${STOCKS}".dat"
+    local filename="${STOCKS}.dat"
 		local percentage=$(bc <<< "scale=4; ($index/$arrayLen)*100")
     echo ""
 		echo -ne "Downloading ${STOCKS} data: (${percentage}%) of total completed.\r"
 		
 		local url="https://query1.finance.yahoo.com/v7/finance/download/${STOCKS}?period1=${period1}&period2=${period2}&interval=1d&events=history"
-    wget -q -O ${tmpdir}${filename} --post-data ${postdata} ${url} || true
+    wget -q -O "${tmpdir}${filename} --post-data ${postdata} ${url}" || true
 
     if [ $? -eq 0 ]; then
       case "$STOCKS" in
-        %5EVIX)
-          sed -i -r "s/^/VIX,/g" ${tmpdir}${filename} 
-          ;;
-        %5EGSPC)
-          sed -i -r "s/^/SP500,/g" ${tmpdir}${filename} 
-          ;;
-        %5EDJI)
-          sed -i -r "s/^/DJIA,/g" ${tmpdir}${filename} 
-          ;;
-        %5EGSPTSE)
-          sed -i -r "s/^/SPTSE,/g" ${tmpdir}${filename} 
-          ;;
-        *)
-          sed -i -r "s/^/${STOCKS},/g" ${tmpdir}${filename} 
-          ;;
+        %5EVIX) sed -i -r "s/^/VIX,/g" "${tmpdir}${filename}" ;;
+        %5EGSPC) sed -i -r "s/^/SP500,/g" "${tmpdir}${filename}" ;;
+        %5EDJI) sed -i -r "s/^/DJIA,/g" "${tmpdir}${filename}" ;;
+        %5EGSPTSE) sed -i -r "s/^/SPTSE,/g" "${tmpdir}${filename}" ;;
+        *) sed -i -r "s/^/${STOCKS},/g" "${tmpdir}${filename}" ;;
       esac
 
       sed -i '1d' "${tmpdir}${filename}"
@@ -182,12 +172,12 @@ function download() {
       if [ "${colnames}" ]; then sed -i '1s/^/SYMBOL,DATE,OPEN,HIGH,LOW,CLOSE,ADJ_CLOSE,VOLUME\n/' "${tmpdir}${filename}"; fi
 
       if [ ! "${keep_all}" ]; then 
-          cat "${tmpdir}${filename}" >> "./${aggregator}"
-          rm -f "${tmpdir}${filename}"
+        cat "${tmpdir}${filename}" >> "./${aggregator}"
+        rm -f "${tmpdir}${filename}"
       fi
 
-      printf "${STOCKS}${newline}" >> ${logResume}
-      if [ ! "$unsafe" ]; then sleep ${sleeptime}; fi
+      printf "${STOCKS}${newline}" >> "${logResume}"
+      if [ ! "${unsafe}" ]; then sleep "${sleeptime}"; fi
       index=$((index + 1))
     else
       printf "${STOCKS}${newline}" >> "${logError}"
@@ -219,7 +209,6 @@ function printsummary() {
 }
 
 # __init__ main script
-# ###########################################################################
 
 # number of args before entering getopts parsing
 if [ $# -lt 6 ]; then
