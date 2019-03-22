@@ -202,10 +202,11 @@ $ ./qad.sh -u "user@yahoo" -p "password" -l "stocklist.ini"
 ```
 
 Output looks like the following:
+
 ```bash
 user@localhost:/github/data-scientia/QA.d $ ./qad.sh -u "user@yahoo" -p "password" -l "stocklist.ini" -V
 ```
-
+```
 ==================================================================================
 QA.d downloader 1.3 -- Your dataset file is: QAd_dataset-20180403.csv
 QA.d downloader 1.3 -- Your parameter file is : TSX.ini
