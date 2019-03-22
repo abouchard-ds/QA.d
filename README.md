@@ -28,11 +28,11 @@
 
 QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of bash scripts to automatically create a dataset by downloading historical stock data as CSV/JSON files.
 
-A dataset created with this program can be of a sizable amount. If you take all canadian and american securities without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately >4gb of data (**~16,000 individual files and a big file containing ~44,500,000 observations**). 
+A dataset created with this program can be of a sizable amount. If you take all canadian and american securities without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately >4gb of data (**~16,000 individual files and a big file containing ~44,500,000 observations**). I've also splitted the data into stock/year/month and got ~4,400,000 individual files which is interesting in a "*big data*" perspective.
 
 
 ## Objective
-The project is about generating a large amount of data related to each other in multiple files and/or one big file. More specifically:
+The project is about generating a large amount of data related to each other consisting of multiple files and/or one big file. More specifically:
 
 - this is a bash project; exploring the limitations and benefits of bash;
 - nothing is faster than base OS level: if it can be done relatively simply with bash, why do it differently;
