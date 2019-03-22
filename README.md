@@ -1,5 +1,14 @@
 ![Logo](media/qa-d_logo.png)
 
+<p align="center">
+
+  <img src="https://img.shields.io/badge/bash-4.4.12-blue.svg">
+  <img src="https://img.shields.io/badge/zenity-3.24.0-green.svg">
+  <img src="https://img.shields.io/badge/powered%20by-jekyll-red.svg">
+
+</p>
+
+
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -13,17 +22,9 @@
 
 ## Introduction
 
-<p align="center">
-
-  <img src="https://img.shields.io/badge/bash-4.4.12-blue.svg">
-  <img src="https://img.shields.io/badge/zenity-3.24.0-green.svg">
-  <img src="https://img.shields.io/badge/powered%20by-jekyll-red.svg">
-
-</p>
+*Quantitative analysis (QA) is a technique that seeks to understand behavior by using mathematical and statistical modeling, measurement, and research. Quantitative analysts aim to represent a given reality in terms of a numerical value. Quantitative analysis is employed for several reasons, including measurement, performance evaluation or valuation of a financial instrument, and predicting real-world events, such as changes in a country's gross domestic product (GDP) ... analysts who rely strictly on quantitative analysis are frequently referred to as "quants" or "quant jockeys."* -- investopedia
 
 ## Presentation
-
-*Quantitative analysis (QA) is a technique that seeks to understand behavior by using mathematical and statistical modeling, measurement, and research. Quantitative analysts aim to represent a given reality in terms of a numerical value. Quantitative analysis is employed for several reasons, including measurement, performance evaluation or valuation of a financial instrument, and predicting real-world events, such as changes in a country's gross domestic product (GDP) ... analysts who rely strictly on quantitative analysis are frequently referred to as "quants" or "quant jockeys."* -- investopedia
 
 QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of bash scripts to automatically create a dataset by downloading historical stock data as CSV/JSON files.
 
