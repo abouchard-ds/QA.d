@@ -23,6 +23,8 @@
 
 ## Presentation
 
+*Quantitative analysis (QA) is a technique that seeks to understand behavior by using mathematical and statistical modeling, measurement, and research. Quantitative analysts aim to represent a given reality in terms of a numerical value. Quantitative analysis is employed for several reasons, including measurement, performance evaluation or valuation of a financial instrument, and predicting real-world events, such as changes in a country's gross domestic product (GDP) ... analysts who rely strictly on quantitative analysis are frequently referred to as "quants" or "quant jockeys."* -- investopedia
+
 QA.d (**Q**uantitative **A**nalysis **d**ataset) is a small project consisting of bash scripts to automatically create a dataset by downloading historical stock data as CSV/JSON files.
 
 A dataset created with this program can be of a sizable amount. If you take all canadian and american securities without exclusion (debentures, warrants, preferred shares, etc.) you could get approximately >4gb of data (**~16,000 individual files and a big file containing ~44,500,000 observations**). 
