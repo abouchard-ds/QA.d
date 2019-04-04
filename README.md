@@ -75,7 +75,7 @@ If the data itself is of interest to you, you have the option to configure (redu
 Downloading all the canadian and american historical stock data since 1996 will take a couple of hours.(random sampling test avg 0.7733 second per stock - approx. 4 hours for 16500 files). So if your program crashes or you issue a CTRL-C, you can resume your download later if you activate this parameter.
 
 ### NON-FEATURE
-My goal is to increase the types, size and number of files generated. If you want to be very selective on the dates, type, stocks etc. You can do it after the creation of the dataset or use another tool made for this. (thousands of python and R libraries are made for this purpose. not this script)
+My goal is to increase the types, size and number of files generated. I dont implement features that reduce the dataset.
 
 ## Installation
 
