@@ -35,16 +35,14 @@ A dataset created with this program can be of a sizable amount. If you take all 
 The project is about generating a large amount of data related to each other consisting of multiple files and/or one big file. More specifically:
 
 - this is a bash project; exploring the limitations and benefits of bash;
-- nothing is faster than base OS level: if it can be done relatively simply with bash, why do it differently;
+- if it can be done relatively simply with bash, why do it differently;
 - simulating big data stuff: data ingestion, data wrangling/preprocessing, simulating ETLs;
 - practice parralel processing (xargs, parralel,...) on multiple files;
-- practice with multiples files in Python, R and both;
 - load those files into an HDFS (hadoop distributed file system);
 - maybe you want to practice with Excel at its maximum capacity;
 - importing data in multiple database engine, exploring external tables and so on;
 - the pleasure of doing something uncommon (you'll always see this done in python and R, which have overhead and need installation);
-- transaction benchmarking, hardware/os testing, statistical analysis, machine learning algorithms;
-- the data is real, you could take financial decisions with it.
+- transaction benchmarking, hardware/os testing, statistical analysis, machine learning algorithms.
 
 ## Features
 
@@ -59,23 +57,14 @@ The project is about generating a large amount of data related to each other con
 * Usefull if you want to practice data wrangling on files;
 * Who knows? You could become a millionnaire using your dataset to make financial decisions
 
-### BIG DATA / INGESTION - ETL SIMULATION
-You can randomly distribute the files between multiple servers and try to recover a full dataset. You can try out an ingestion pipeline for benchmarking or an ETL for correctness. You can stress test some program (*SPSS, SAS, RapidMiner, Enteprise Miner, Python, R, Octave, Matlab, Orange, Tableau, Excel, Access, bash, Spark, anything*).
-
 ### The "LIGHT option" - 1 BIGFILE
 If getting all the text files is not for you but you only want one massive file (3Gb ++) for your studies/test/project. (Random sampling test avg size per file 220K) min 88b max 512k. Using the full_us_can.txt stockfile I get 4gb of data (~16,000 individual files and a big file of 3-4gb containing 44,500,000 observations/lines/rows). You can increase the amount of files by partitionning them too.
-
-### FILES VERSUS IN MEMORY
-You may want to experiment with big data, distributed file systems or parralelization. Then you need a lot of structured, semi-structured, unstructured files. This is a good project for you. If you also want to optimize algorithms for an inmemory dataset.
 
 ### STOCKLIST CURATION
 If the data itself is of interest to you, you have the option to configure (reduce) the stocklist that the program will download with a simple text file. If a stock does not exist anymore (mergers, bankruptcy, etc.) the program can remove the bad entries from your stocklist automatically or you can consult the `.stock.error` file.
 
 ### RESUMABLE
 Downloading all the canadian and american historical stock data since 1996 will take a couple of hours.(random sampling test avg 0.7733 second per stock - approx. 4 hours for 16500 files). So if your program crashes or you issue a CTRL-C, you can resume your download later if you activate this parameter.
-
-### NON-FEATURE
-My goal is to increase the types, size and number of files generated. I dont implement features that reduce the dataset.
 
 ## Installation
 
@@ -112,8 +101,6 @@ ii  zenity      3.24.0-1         amd64            Display graphical dialog boxes
 ```
 
 ## Parameters
-
-
 
 ## Dataset
 
